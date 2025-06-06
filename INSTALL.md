@@ -3,7 +3,7 @@ Build Instructions
 
 (1) make sure that all the required dependencies are available
 
-    - Qt version 6.X ( buildding under 5.X should also be possible)
+    - Qt version 6.X ( building under 5.X should also be possible)
     - qwt
     - boost
     - spdlog
