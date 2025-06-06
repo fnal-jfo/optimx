@@ -1,6 +1,0 @@
-set(__QT_DEPLOY_TARGET_optimx_FILE /usr/local/repos/optimx-github/build/optimx)
-set(__QT_DEPLOY_TARGET_optimx_TYPE EXECUTABLE)
-set(__QT_DEPLOY_TARGET_optimx_sqlite_extensions_FILE /usr/local/repos/optimx-github/build/liboptimx_sqlite_extensions.so)
-set(__QT_DEPLOY_TARGET_optimx_sqlite_extensions_TYPE MODULE_LIBRARY)
-set(__QT_DEPLOY_TARGET_optimx_sqlite_carray_FILE /usr/local/repos/optimx-github/build/liboptimx_sqlite_carray.so)
-set(__QT_DEPLOY_TARGET_optimx_sqlite_carray_TYPE MODULE_LIBRARY)
