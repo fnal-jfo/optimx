@@ -11,11 +11,11 @@ Build Instructions
 
 (2) create a build directory (e.g. in the top level source dir)
     mkdir build
-
+    cd build
   
-(3)  create the Makefiles
-
-    cmake -DCMAKE_BUILD_TYPE=RElease ..
+(3)  create the Makefiles usin cmake (Note: use -DCMAKE_BUILD_TYPE=Debug for debugging version )
+     
+    cmake -DCMAKE_BUILD_TYPE=Release ..  
     
 (4) run make
 
