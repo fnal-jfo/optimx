@@ -1,0 +1,582 @@
+#---------------------------------------------
+#  CMakeLists.win32 for OptimX Win32
+#
+#  This file is part of OptiMX, an interactive tool  
+#  for beam optics design and analysis. 
+#
+#  Copyright 2025 Fermi Forward Discovery Group, LLC.
+#  This material was produced under U.S. Government contract
+#  89243024CSC000002 for Fermi National Accelerator Laboratory (Fermilab),
+#  which is operated by Fermi Forward Discovery Group, LLC for the
+#  U.S. Department of Energy. The U.S. Government has rights to use,
+#  reproduce, and distribute this software.
+#
+#  NEITHER THE GOVERNMENT NOR FERMI FORWARD DISCOVERY GROUP, LLC
+#  MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY
+#  LIABILITY FOR THE USE OF THIS SOFTWARE.
+#
+#  If software is modified to produce derivative works, such modified
+#  software should be clearly marked, so as not to confuse it with the
+#  version available from Fermilab.
+#
+#  Additionally, this program is free software; you can redistribute
+#  it and/or modify it under the terms of the GNU General Public License
+#  as published by the Free Software Foundation; either version 2
+#  of the License, or (at your option) any later version. Accordingly,
+#  this program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#
+#  See the GNU General Public License for more details.
+#
+#  https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#  https://www.gnu.org/licenses/gpl-3.0.html
+#
+#  =================================================================*/
+#
+# cmake -DCMAKE_BUILD_TYPE=Release ..
+# cmake -DCMAKE_BUILD_TYPE=Debug ..
+#--------------------------------------------
+
+add_compile_definitions("_UNICODE")
+add_compile_definitions("UNICODE")
+add_compile_definitions("USE_MSWINDOWS")
+add_compile_definitions("COMPILE_SQLITE_EXTENSIONS_AS_LOADABLE_MODULE")
+add_compile_definitions("SPDLOG_FMT_EXTERNAL")
+add_compile_definitions("FMT_HEADER_ONLY")
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+set(CMAKE_CXX_FLAGS                  "-fopenmp")
+set(CMAKE_CXX_FLAGS_DEBUG            "-O0 -g")
+set(CMAKE_CXX_FLAGS_RELEASE          "-O3  -DQT_NO_DEBUG")
+set(CMAKE_CXX_FLAGS_RELWITHDEBUGINFO "-O3 -g")
+set(CMAKE_CXX_FLAGS_MINSIZEREL       "")  # flags to minimize size and maximize speed 
+
+if( (CMAKE_CXX_COMPILER_ID STREQUAL "GNU") AND (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.9)) 
+  unset(CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_FLAGS                  "-fopenmp -std=c++0x")
+  set(CMAKE_CXX_RELEASE_FLAGS          "-O3 -DQT_NO_DEBUG")
+endif()
+
+#set(CMAKE_AUTOUIC ON)  
+
+set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
+find_package (Threads)
+
+# The boost libraries
+#--------------------
+# set( Boost_USE_MULTITHREADED ON)
+# set( Boost_USE_STATIC_LIBS OFF)   
+# set( Boost_USE_DEBUG_RUNTIME OFF)
+# set( BOOST_INCLUDE_DIR /usr/include/boost )
+# set( BOOST_LIBRARY_DIR /usr/lib )
+# FIND_PACKAGE( Boost REQUIRED thread)
+
+# boost libraries are required for regex with g++ < 4.9 
+# FIND_PACKAGE( Boost REQUIRED regex)
+
+# Find includes in corresponding build directories
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+set(CMAKE_VERBOSE_MAKEFILE on )
+ 
+# ${CMAKE_SOURCE_DIR}/plugins/include
+# ${CMAKE_SOURCE_DIR}/gslpp/include/gslplusplus
+# ${CMAKE_SOURCE_DIR}/gslpp/include
+
+
+include_directories(
+${Boost_INCLUDE_DIR}
+${CMAKE_SOURCE_DIR}/include
+${CMAKE_SOURCE_DIR}/Dialogs/include 
+d:/msys64/mingw64/include/qwt-qt5
+e:/Users/Francois/local/32bit/include
+)
+
+# Instruct CMake to run moc automatically when needed.
+set(CMAKE_AUTOMOC ON)
+
+# Find the required Qt libraries
+find_package(Qt5Widgets)
+find_package(Qt5Core)
+find_package(Qt5PrintSupport)
+find_package(Qt5Help)
+
+#Create code from a list of Qt designer ui files.
+#Options may be given to uic, such as those found when executing "uic -help"
+#qt5_wrap_ui(outfiles inputfile ... OPTIONS ...)
+
+SET(UI_RESOURCES
+  optimx.qrc
+)
+
+set(UIS
+ui/compress_dialog.ui
+ui/control4d_dialog.ui
+ui/control_dialog.ui
+ui/chroma_control_dialog.ui
+ui/distribution_parameters.ui
+ui/edit_measured_data_dialog.ui
+ui/edit_read_dialog.ui
+ui/editor_preferences_dialog.ui
+ui/element_selection_dialog.ui
+ui/energy_scale_dialog.ui
+ui/export_dialog.ui
+ui/external_plot_dialog.ui
+ui/extra_scatter_dialog.ui
+ui/file_preferences_dialog.ui
+ui/find_dialog.ui
+ui/fit_control_dialog.ui
+ui/fixed_limits_dialog.ui
+ui/function_dialog.ui
+ui/functions_dialog.ui
+ui/general_preferences_dialog.ui
+ui/import_dialog.ui
+ui/import_from_mad_dialog.ui
+ui/import_madx_dialog.ui
+ui/integration_step_dialog.ui
+ui/lattice_dialog.ui
+ui/matrix_dialog.ui
+ui/moments_selection_dialog.ui
+ui/measured_data_dialog.ui
+ui/measurement_data_dialog.ui
+ui/orbit_dialog.ui
+ui/plot_options_dialog.ui
+ui/plot_preferences.ui
+ui/plot_preferences_dialog.ui
+ui/progress_dialog.ui
+ui/ptracking_dialog.ui
+ui/replace_dialog.ui
+ui/space_charge_control_dialog.ui
+ui/steps_dialog.ui
+ui/track_plot_distribution_dialog.ui
+ui/track_positions_dialog.ui
+ui/track_save_positions_dialog.ui
+ui/tracker_distribution_dialog.ui
+ui/tracker_distribution_dialog_new.ui
+ui/tracker_save_distribution_dialog.ui
+ui/tracking_parameters.ui
+ui/tracking_parameters_new.ui
+ui/tools_control_dialog.ui
+ui/tune_diagram_dialog.ui
+)
+
+# obsolete
+#include/OptimGenericEditor.h
+#include/QLambda.h
+#include/CompressionDialog.h
+
+set(HEADERS
+include/platform.h
+include/optionparser.h
+include/PolyRegression.h
+include/PlotPreferences.h
+Dialogs/include/ChromaControlDialog.h
+Dialogs/include/CompressDialog.h
+Dialogs/include/Control4DDialog.h
+Dialogs/include/ControlDialog.h
+Dialogs/include/CustomFileDialog.h
+Dialogs/include/EditMeasuredDataDialog.h
+Dialogs/include/EditReadDialog.h
+Dialogs/include/EditorPreferencesDialog.h
+Dialogs/include/ElementSelectionDialog.h
+Dialogs/include/EnergyScaleDialog.h
+Dialogs/include/ExportDialog.h
+Dialogs/include/ExternalPlotDialog.h
+Dialogs/include/ExtraScatterDialog.h
+Dialogs/include/FindDialog.h
+Dialogs/include/FitControlDialog.h
+Dialogs/include/FixedLimitsDialog.h
+Dialogs/include/FunctionDialog.h
+Dialogs/include/GeneralPreferencesDialog.h
+Dialogs/include/ImportDialog.h
+Dialogs/include/ImportMadXDialog.h
+Dialogs/include/IntegrationStepDialog.h
+Dialogs/include/LatticeDialog.h
+Dialogs/include/MatrixDialog.h
+Dialogs/include/MomentsSelectionDialog.h
+Dialogs/include/MeasuredDataDialog.h
+Dialogs/include/OrbitDialog.h
+Dialogs/include/ParticleTrackingDialog.h
+Dialogs/include/PlotOptionsDialog.h
+Dialogs/include/PlotPreferencesDialog.h
+Dialogs/include/ProgressDialog.h
+Dialogs/include/SpaceChargeControlDialog.h
+Dialogs/include/ReplaceDialog.h
+Dialogs/include/StepsDialog.h
+Dialogs/include/TrackPlotDistributionDialog.h
+Dialogs/include/TrackPositionsDialog.h
+Dialogs/include/TrackSavePositionsDialog.h
+Dialogs/include/TrackerDistributionDialog.h
+Dialogs/include/TrackerDistributionDialogNew.h
+Dialogs/include/TrackerSaveDistributionDialog.h
+Dialogs/include/TrackingParametersDialog.h
+Dialogs/include/TrackingParametersNewDialog.h
+Dialogs/include/ToolsControlDialog.h                  
+Dialogs/include/TuneDiagramDialog.h                        
+include/Vavilov.h
+include/Beamline.h
+include/BeamMoments.h
+include/Cavity.h
+include/Conversions.h
+include/Coordinates.h
+include/Channel.h
+include/CompactLegend.h
+include/Constants.h
+include/CustomEvents.h
+include/DataCurve.h
+include/DistancePicker.h
+include/Dlg4DCtrl.h
+include/Element.h
+include/ElmSelection.h
+include/Fit.h
+#include/Foil.h
+include/FoilNew.h
+include/Histogram.h
+include/JetColorMap.h
+include/GlobalEventFilter.h
+include/Globals.h
+include/Losses.h
+include/LegoData.h
+include/Moliere.h
+include/Medium.h
+include/Optim.h
+include/OptimApp.h
+include/OptimCalc.h
+include/OptimEditor.h
+include/OptimExceptions.h
+include/OptimHelpAssistant.h
+include/OptimIntervalCurve.h
+include/OptimIntervalSample.h
+#include/OptimIntervalSeriesData.h
+include/OptimIntervalSymbol.h
+include/OptimLegendLabel.h
+include/OptimLegoPlotItem.h
+include/OptimLogoPlotItem.h
+include/OptimMainWindow.h
+include/OptimMdiArea.h
+include/OptimMdiSubWindow.h
+include/OptimMessages.h
+include/OptimPlot.h
+include/OptimPlotCurve.h
+include/OptimPlotDataLegendItem.h
+include/OptimPlotLegend.h
+include/OptimPlotLinearScaleEngine.h
+include/OptimPlotMarker.h
+include/OptimPlotRenderer.h
+include/OptimPlotZoomer.h
+include/OptimProgramState.h
+include/OptimStateMachine.h
+include/OptimStates.h
+include/OptimTextEditor.h
+#include/OptimTracker.h
+include/OptimTrackerNew.h
+include/OptimTuneDiagram.h
+include/Particle.h
+include/PoincarePlot.h
+include/PoincarePlotCanvas.h
+include/TrackParam.h
+include/TrackerPlot.h
+include/ProgramConstants.h
+include/RMatrix.h
+include/RMatrixFwd.h
+include/Vector.h
+include/RootFinder.h
+include/Rotation.h
+include/SCalculator.h
+include/ScatterData.h
+include/ScatterPlotItem.h
+include/ScientificDoubleSpinBox.h
+include/SplineInterpolator.h
+include/Structs.h
+include/Tracker.h
+include/TrackerParameters.h
+include/Tracker3DSeriesData.h
+include/TrackerSeriesData.h
+include/TuneDiagramSeriesData.h                    
+include/Twiss.h                                    
+include/UIntSpinBox.h                                    
+include/OptimUserRtti.h
+include/Utility.h                                  
+include/MatrixUtility.h
+include/SQLSeriesData.h                                 
+)
+
+# obsolete
+# src/Calculator.cpp
+# src/OptimBetaPlot.cpp
+# src/OptimCL.cpp
+# src/OptimFileMenu.cpp
+# src/OptimGenericEditor.cpp
+# src/parsemadx.cpp
+# src/regex_test.cpp
+# src/LegacySpaceChargePhases.cpp
+# src/LegacySpaceChargeProj.cpp
+# src/LegacySpaceChargeBetas.cpp
+# src/LegacySpaceChargeRMatrix.cpp
+# src/LegacySpaceChargeSizes.cpp
+# src/LegacySpaceChargeGetMatrix.cpp
+# src/LegacySpaceChargeViewFunctions.cpp
+
+set(SOURCES  
+Dialogs/src/ChromaControlDialog.cpp
+Dialogs/src/CompressDialog.cpp
+Dialogs/src/Control4DDialog.cpp
+Dialogs/src/ControlDialog.cpp
+Dialogs/src/CustomFileDialog.cpp
+Dialogs/src/EditMeasuredDataDialog.cpp
+Dialogs/src/EditReadDialog.cpp
+Dialogs/src/EditorPreferencesDialog.cpp
+Dialogs/src/ElementSelectionDialog.cpp
+Dialogs/src/EnergyScaleDialog.cpp
+Dialogs/src/ExportDialog.cpp
+Dialogs/src/ExternalPlotDialog.cpp
+Dialogs/src/ExtraScatterDialog.cpp
+Dialogs/src/FindDialog.cpp
+Dialogs/src/FitControlDialog.cpp
+Dialogs/src/FixedLimitsDialog.cpp
+Dialogs/src/FunctionDialog.cpp
+Dialogs/src/GeneralPreferencesDialog.cpp
+Dialogs/src/ImportMadXDialog.cpp
+Dialogs/src/ImportDialog.cpp
+Dialogs/src/IntegrationStepDialog.cpp
+Dialogs/src/MatrixDialog.cpp
+Dialogs/src/MomentsSelectionDialog.cpp
+Dialogs/src/MeasuredDataDialog.cpp
+Dialogs/src/LatticeDialog.cpp
+Dialogs/src/OrbitDialog.cpp
+Dialogs/src/ParticleTrackingDialog.cpp
+Dialogs/src/PlotOptionsDialog.cpp
+Dialogs/src/PlotPreferencesDialog.cpp
+Dialogs/src/ProgressDialog.cpp
+Dialogs/src/ReplaceDialog.cpp
+Dialogs/src/SpaceChargeControlDialog.cpp
+Dialogs/src/StepsDialog.cpp
+Dialogs/src/TrackPlotDistributionDialog.cpp
+Dialogs/src/TrackPositionsDialog.cpp
+Dialogs/src/TrackSavePositionsDialog.cpp
+Dialogs/src/TrackerDistributionDialog.cpp
+Dialogs/src/TrackerDistributionDialogNew.cpp
+Dialogs/src/TrackerSaveDistributionDialog.cpp
+Dialogs/src/TrackingParametersDialog.cpp
+Dialogs/src/TrackingParametersNewDialog.cpp
+Dialogs/src/ToolsControlDialog.cpp
+Dialogs/src/TuneDiagramDialog.cpp
+src/Vavilov.cpp
+src/Analyze.cpp
+src/Analyze2.cpp
+src/Aperture.cpp
+src/Bunch.cpp
+src/BBeam.cpp
+src/Beamline.cpp
+src/CFBend.cpp
+src/CFBendNew.cpp
+src/CFEBend.cpp
+src/Cavity.cpp
+src/Channel.cpp
+src/CompactLegend.cpp
+src/Constants.cpp
+src/CustomEvents.cpp
+src/cmdBetas.cpp
+src/cmdBetasNew.cpp
+src/cmdInvert.cpp
+src/cmdPhases.cpp
+src/cmdSizes.cpp
+src/cmdTrajectory.cpp
+src/cmdTrajectoryNew.cpp
+src/cmdDec.cpp
+src/cmdFunctions4D.cpp
+src/cmdBetas4D.cpp
+src/cmdBetas4DNew.cpp
+src/cmdDispersion4D.cpp
+src/cmdDispersion4DNew.cpp
+src/cmdTrackerSaveMoments.cpp
+src/cmdTrackerSavePositions.cpp
+src/cmdTrackerPlotDistribution.cpp
+src/cmdTrackerPlotIntensity.cpp
+src/cmdTrackerPlotCentroids.cpp
+src/cmdTrackerPlotDistributionNew.cpp
+src/cmdTrackerPlotMoments.cpp
+src/cmdTrackerPlotEigenEmittances.cpp
+src/cmdTrackerPlotEmittances.cpp
+src/cmdTrackerPlotLatticeFunctions.cpp
+src/cmdTrackerPlotDispersion.cpp
+src/cmdTrackerPlotPositions.cpp
+src/BeamMoments.cpp
+src/Compress.cpp
+src/Coordinates.cpp
+src/DataCurve.cpp
+src/DistancePicker.cpp
+src/Drift.cpp
+src/EAcc.cpp
+src/EQuadrupole.cpp
+src/Edge.cpp
+src/EdgeNew.cpp
+src/Element.cpp
+src/ElementNew.cpp
+src/ElmSelection.cpp
+src/Export.cpp
+#src/Foil.cpp
+src/FoilNew.cpp
+src/GCavity.cpp
+src/GCavityNew.cpp
+src/GlobalEventFilter.cpp
+src/Globals.cpp
+src/Histogram1D.cpp
+src/Histogram2D.cpp
+src/Integrals.cpp
+src/Integrals4D.cpp
+src/Import.cpp
+src/ImportMadX.cpp
+src/Instrument.cpp
+src/JetColorMap.cpp
+src/Landau.cpp
+src/LCorrector.cpp
+src/LScatter.cpp
+src/LiLens.cpp
+src/Medium.cpp
+src/Moliere.cpp
+src/Multipole.cpp
+src/OptimApp.cpp
+src/OptimCLTxt.cpp
+src/OptimCalc.cpp
+src/OptimCommandLine.cpp
+src/OptimEditor.cpp
+src/OptimExceptions.cpp
+src/OptimFits.cpp
+src/OptimHelpAssistant.cpp
+src/OptimIntervalCurve.cpp
+src/OptimIntervalSample.cpp
+#src/OptimIntervalSeriesData.cpp
+src/OptimIntervalSymbol.cpp
+src/OptimLegendLabel.cpp
+src/OptimLegoPlotItem.cpp
+src/OptimLogoPlotItem.cpp
+src/OptimMainWindow.cpp
+src/OptimMdiArea.cpp
+src/OptimMdiSubWindow.cpp
+src/OptimMessages.cpp
+src/OptimPlot.cpp
+src/OptimPlotCurve.cpp
+src/OptimPlotLegend.cpp
+src/OptimPlotLinearScaleEngine.cpp
+src/OptimPlotMarker.cpp
+src/OptimPlotRenderer.cpp
+src/OptimPlotZoomer.cpp
+src/OptimPrint.cpp
+src/OptimStateMachine.cpp
+src/OptimStates.cpp
+src/OptimTextEditor.cpp
+#src/OptimTracker.cpp
+src/OptimTrackerNew.cpp
+src/OptimTrackerPlots.cpp
+src/OptimTuneDiagram.cpp
+src/PCavity.cpp
+src/PCavityNew.cpp
+src/Particle.cpp
+src/PoincarePlot.cpp
+src/PoincarePlotCanvas.cpp
+src/TrackerPlot.cpp
+src/TrackerParameters.cpp
+src/Quadrupole.cpp
+src/QuadrupoleNew.cpp
+src/RMatrix.cpp
+src/RootFinder.cpp
+#src/Rotation.cpp
+src/Sextupole.cpp
+src/SextupoleNew.cpp
+src/Solenoid.cpp
+src/SolenoidNew.cpp
+src/SCalculator.cpp
+src/ScatterData.cpp
+src/ScientificDoubleSpinBox.cpp
+src/SpaceCharge.cpp
+src/SpaceChargeBetas.cpp
+src/SpaceChargeViewFunctions.cpp
+src/SpaceChargeSizes.cpp
+src/SpaceChargePhases.cpp
+src/SpaceChargeProj.cpp
+src/SpaceChargeRMatrix.cpp
+src/SplineInterpolator.cpp
+src/ScatterPlotItem.cpp
+src/SQLSeriesData.cpp     
+src/Structs.cpp
+src/SymMatrix.cpp
+src/TCorrector.cpp
+src/TScatter.cpp
+src/TScatterNew.cpp
+src/TrackParam.cpp
+src/Tracker.cpp
+src/TrackerPlot6.cpp
+src/Tracker3DSeriesData.cpp
+src/TrackerSeriesData.cpp
+src/TuneDiagramSeriesData.cpp
+src/Twiss.cpp
+src/UIntSpinBox.cpp
+src/Utility.cpp
+src/UtilityCalc.cpp
+src/View4D.cpp
+src/Orbit.cpp
+src/OrbitNew.cpp
+src/ViewLatticeTable.cpp
+src/WakeField.cpp
+src/XferMatrix.cpp
+src/eigval4d.cpp
+src/main.cpp
+src/matrinv.cpp
+#src/sqlite/sqlite.c
+)
+
+set(MODULE_SOURCES
+src/extension-functions.c
+)
+set(CARRAY_MODULE_SOURCES
+src/carray.c
+)
+
+qt5_wrap_ui(UI_SOURCES ${UIS})
+list(APPEND SOURCES ${UI_SOURCES})
+QT5_ADD_RESOURCES(UI_RESOURCES_RCC ${UI_RESOURCES})
+set(RES_FILES optim.rc)
+
+#add_executable( optimx ${HEADERS} ${SOURCES} ${UI_RESOURCES_RCC})
+add_executable( optimx WIN32 ${HEADERS} ${SOURCES} ${UI_RESOURCES_RCC} ${RES_FILES})
+
+#this is needed for the plugins
+#set(CMAKE_EXE_LINKER_FLAGS  -Wl,-export-dynamic)
+
+# Use the Widgets module from Qt 5.
+target_link_libraries(optimx Qt5::Widgets)
+target_link_libraries(optimx ${CMAKE_THREAD_LIBS_INIT})
+
+add_library(qwt-qt5 SHARED IMPORTED)
+set_target_properties(qwt-qt5 PROPERTIES
+  IMPORTED_LOCATION "e:/Users/Francois/local/32bit/lib/qwt-qt5.dll"
+  IMPORTED_IMPLIB   "e:/Users/Francois/local/32bit/lib/libqwt-qt5.dll.a"
+  
+  INTERFACE_INCLUDE_DIRECTORIES "e:/Users/Francois/local/32bit/include/qwt-qt5"
+)
+
+LINK_DIRECTORIES(${CMAKE_SOURCE_DIR}/gslpp/lib)
+#TARGET_LINK_LIBRARIES(optimx fftw3_omp)
+#TARGET_LINK_LIBRARIES(optimx fftw3)
+TARGET_LINK_LIBRARIES(optimx qwt-qt5)
+TARGET_LINK_LIBRARIES(optimx gsl)
+TARGET_LINK_LIBRARIES(optimx fmt)
+TARGET_LINK_LIBRARIES(optimx e:/Users/Francois/repos/newoptimx/local32/lib/libvsqlitepp.a)
+TARGET_LINK_LIBRARIES(optimx sqlite3)
+target_link_libraries(optimx Qt5::Widgets)
+target_link_libraries(optimx Qt5::Core)
+target_link_libraries(optimx Qt5::PrintSupport)
+target_link_libraries(optimx Qt5::Help)
+
+#boost libraries are required for regex if g++ < 4.9
+#TARGET_LINK_LIBRARIES(optimx ${Boost_LIBRARIES} )
+
+#TARGET_LINK_LIBRARIES(optimx ${CMAKE_SOURCE_DIR}/gslpp/lib/libgslplusplus.so)
+#TARGET_LINK_LIBRARIES(optimx gslplusplus)
+
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DQT_NO_DEBUG_OUTPUT")

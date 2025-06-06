@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GeneralPreferencesDialog</class>
+ <widget class="QDialog" name="GeneralPreferencesDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>549</width>
+    <height>419</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Computation Preferences</string>
+  </property>
+  <widget class="QDialogButtonBox" name="buttonBox">
+   <property name="geometry">
+    <rect>
+     <x>195</x>
+     <y>326</y>
+     <width>156</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBoxIgnoreAutoRepeat">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>20</y>
+     <width>361</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Ignore auto-repeat for CTRL-Left/Right arrow recalc</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBoxQuadFringeOff">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>60</y>
+     <width>361</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Turn off quad fringe field aberrations.  </string>
+   </property>
+  </widget>
+  <widget class="ScientificDoubleSpinBox" name="doubleSpinBoxPhaseThreshold">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>100</y>
+     <width>151</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <property name="decimals">
+    <number>8</number>
+   </property>
+   <property name="maximum">
+    <double>0.010000000000000</double>
+   </property>
+   <property name="singleStep">
+    <double>0.000001000000000</double>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>110</y>
+     <width>211</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Negative Phase Advance Threshold </string>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="randomGenGroupBox">
+   <property name="geometry">
+    <rect>
+     <x>52</x>
+     <y>200</y>
+     <width>421</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Random Number Generation</string>
+   </property>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>70</y>
+      <width>161</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Random Generator Seed</string>
+    </property>
+   </widget>
+   <widget class="UIntSpinBox" name="seedSpinBox">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>60</y>
+      <width>151</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="maximum">
+     <number>999999999</number>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="userSeedCheckBox">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>171</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>User-Defined Seed</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QCheckBox" name="checkBoxParallelTracking">
+   <property name="geometry">
+    <rect>
+     <x>62</x>
+     <y>159</y>
+     <width>354</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Enable Parallel (Multi-Threaded) Tracking</string>
+   </property>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ScientificDoubleSpinBox</class>
+   <extends>QDoubleSpinBox</extends>
+   <header>ScientificDoubleSpinBox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>UIntSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>UIntSpinBox.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>GeneralPreferencesDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>144</x>
+     <y>123</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>308</x>
+     <y>69</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>GeneralPreferencesDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>224</x>
+     <y>133</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>319</x>
+     <y>133</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

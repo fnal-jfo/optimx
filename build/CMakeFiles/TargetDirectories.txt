@@ -1,0 +1,11 @@
+/usr/local/repos/optimx-github/build/CMakeFiles/optimx.dir
+/usr/local/repos/optimx-github/build/CMakeFiles/optimx_sqlite_extensions.dir
+/usr/local/repos/optimx-github/build/CMakeFiles/optimx_sqlite_carray.dir
+/usr/local/repos/optimx-github/build/CMakeFiles/edit_cache.dir
+/usr/local/repos/optimx-github/build/CMakeFiles/rebuild_cache.dir
+/usr/local/repos/optimx-github/build/CMakeFiles/optimx_autogen_timestamp_deps.dir
+/usr/local/repos/optimx-github/build/CMakeFiles/optimx_autogen.dir
+/usr/local/repos/optimx-github/build/CMakeFiles/optimx_sqlite_extensions_autogen_timestamp_deps.dir
+/usr/local/repos/optimx-github/build/CMakeFiles/optimx_sqlite_extensions_autogen.dir
+/usr/local/repos/optimx-github/build/CMakeFiles/optimx_sqlite_carray_autogen_timestamp_deps.dir
+/usr/local/repos/optimx-github/build/CMakeFiles/optimx_sqlite_carray_autogen.dir

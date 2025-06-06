@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="header.js"></script>
+<title> OptimM Help: Stripping Foil </title>
+</head>
+<body>
+<h4>J - Stripping Foil </h4>
+<table id="element">
+  <tr>
+    <th>Parameter Description</th>
+    <th>Argument Order</th>
+    <th>Argument Mnemonic </th>
+    <th>Units </th>
+    <th>Default Value</th>
+  </tr>
+  <tr class="alt">
+    <td> Model type </td>
+    <td>  1         </td>
+    <td>  type [1=long, 2=trans, 3=long+trans] </td>
+    <td>  </td>
+    <td>  3              </td>
+  </tr>
+  <tr>
+    <td> Width </td>
+    <td>  2   </td>
+    <td> width      </td>
+    <td> cm         </td>
+    <td> 1.0        </td>
+  </tr>
+  <tr class="alt">
+    <td> Height </td>
+    <td>  3   </td>
+    <td> height     </td>
+    <td> cm         </td>
+    <td> 2.0        </td>
+  </tr>
+  <tr>
+    <td> Xpos LL  </td>
+    <td>  3      </td>
+    <td> xp      </td>
+    <td> cm         </td>
+    <td> 0.0        </td>
+  </tr>
+  <tr class="alt">
+    <td> Ypos LB  </td>
+    <td>  4      </td>
+    <td> yp      </td>
+    <td> cm         </td>
+    <td> 0.0        </td>
+  </tr>
+  <tr>
+    <td> Thickness </td>
+    <td>  5   </td>
+    <td> L         </td>
+    <td> micro g/cm**2    </td>
+    <td> 600              </td>
+  </tr>
+  <tr class="alt">
+    <td> Density       </td>
+    <td>  6            </td>
+    <td> rho           </td>
+    <td> [g/cm**3]     </td>
+    <td> 0.0           </td>
+  </tr>
+  <tr>
+    <td> Atomic Mass  </td>
+     <td>  7         </td>
+    <td>  A          </td>
+    <td>             </td>
+    <td>  12         </td>
+  </tr>
+  <tr class="alt">
+    <td> Atomic No     </td>
+     <td>  8     </td>
+    <td>  Z      </td>
+    <td>         </td>
+    <td>  6      </td>
+  </tr>
+    <td> Avg Energy Loss     </td>
+     <td>  9      </td>
+    <td>  dL/dx   </td>
+    <td>  [GeV/m] </td>
+    <td>  0.0      </td>
+  </tr>
+</table>
+<p>
+
+This element scatters particles both transversely and longitudinally.
+Transversely, small angle Coulomb scattering is approximated by a Gaussian distribution while large
+scattering is modeled by a $1/\theta^3$ distribution consistent with the anglular dependence of the
+single particle Rutherford scattering cross-section.
+The longitudinal distribution is modeled by a Vavilov distribution.
+Every particle gets an independent random (Gaussian distributed) kick.
+The first parameter specifies the scattering rms angular spread. The second
+parameter is the relative thickness gradient (for ionization cooling wedged absorber).
+The third parameter is the wedge tilt (roll). 
+</p>
+<pre>
+t1 	Rms angle[mrad]=0.1  	dL/dx/L[1/cm]=0 	Tilt[deg]=0
+</pre>
+</body>
+</html>
+  

@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ToolsControlDialog</class>
+ <widget class="QDialog" name="ToolsControlDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>653</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>400</width>
+    <height>500</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Tools Control </string>
+  </property>
+  <widget class="QDialogButtonBox" name="buttonBox">
+   <property name="geometry">
+    <rect>
+     <x>119</x>
+     <y>612</y>
+     <width>161</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="acceptDrops">
+    <bool>false</bool>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBoxOrbitClosure">
+   <property name="geometry">
+    <rect>
+     <x>11</x>
+     <y>12</y>
+     <width>372</width>
+     <height>303</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Orbit Closure</string>
+   </property>
+   <widget class="QGroupBox" name="groupBoxGeneralClosure">
+    <property name="geometry">
+     <rect>
+      <x>17</x>
+      <y>129</y>
+      <width>344</width>
+      <height>162</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>16</x>
+       <y>51</y>
+       <width>287</width>
+       <height>104</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="2" column="1">
+       <widget class="ScientificDoubleSpinBox" name="techSpinBoxConvergenceAccuracy">
+        <property name="decimals">
+         <number>323</number>
+        </property>
+        <property name="minimum">
+         <double>0.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>0.100000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.000010000000000</double>
+        </property>
+        <property name="value">
+         <double>0.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="ScientificDoubleSpinBox" name="techSpinBoxConvergenceParameter"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Convergence (relative) </string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QSpinBox" name="spinBoxMaxIterations"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Relaxation parameter</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Maximum no of Iterations</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QRadioButton" name="radioButton6D">
+     <property name="geometry">
+      <rect>
+       <x>18</x>
+       <y>17</y>
+       <width>94</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&amp;6D</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButton4D">
+     <property name="geometry">
+      <rect>
+       <x>117</x>
+       <y>20</y>
+       <width>94</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&amp;4D</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>21</x>
+      <y>33</y>
+      <width>341</width>
+      <height>84</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+    <widget class="QRadioButton" name="radioButtonLinearClosure">
+     <property name="geometry">
+      <rect>
+       <x>9</x>
+       <y>18</y>
+       <width>311</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string> Linear closure (includes dispersion)</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButtonGeneralClosure">
+     <property name="geometry">
+      <rect>
+       <x>8</x>
+       <y>43</y>
+       <width>191</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&amp;General Orbit Closure</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>321</y>
+     <width>373</width>
+     <height>274</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Trajectory Plot</string>
+   </property>
+   <widget class="QGroupBox" name="groupBoxLongitudinal">
+    <property name="geometry">
+     <rect>
+      <x>17</x>
+      <y>131</y>
+      <width>344</width>
+      <height>129</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+    <widget class="QRadioButton" name="radioButtoncm">
+     <property name="geometry">
+      <rect>
+       <x>13</x>
+       <y>10</y>
+       <width>182</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Longit&amp;udinal Position in cm</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButtonns">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>36</y>
+       <width>182</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&amp;Longitudinal Position in ns</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButtondeg">
+     <property name="geometry">
+      <rect>
+       <x>12</x>
+       <y>64</y>
+       <width>182</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Longi&amp;tudinal Position in deg</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButtonrd">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>90</y>
+       <width>171</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Longitu&amp;dinal Position in rd</string>
+     </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="doubleSpinBoxFrequency">
+     <property name="geometry">
+      <rect>
+       <x>203</x>
+       <y>85</y>
+       <width>131</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="decimals">
+      <number>3</number>
+     </property>
+     <property name="maximum">
+      <double>100000.000000000000000</double>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>206</x>
+       <y>64</y>
+       <width>126</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Rf Frequency [MHz]</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_4">
+    <property name="geometry">
+     <rect>
+      <x>17</x>
+      <y>29</y>
+      <width>342</width>
+      <height>96</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>17</x>
+       <y>12</y>
+       <width>311</width>
+       <height>74</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="2" column="0">
+       <widget class="QRadioButton" name="radioButtonPlotNormalizedDisplacement">
+        <property name="text">
+         <string>Plot beam displacement normali&amp;zed w/r to beam size</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QRadioButton" name="radioButtonPlotDisplacementAndBoundaries">
+        <property name="text">
+         <string>Plot beam &amp;displacement and beam boundaries</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QRadioButton" name="radioButtonNormalPlot">
+        <property name="text">
+         <string>&amp;Normal plot</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ScientificDoubleSpinBox</class>
+   <extends>QDoubleSpinBox</extends>
+   <header>ScientificDoubleSpinBox.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>ToolsControlDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>243</x>
+     <y>497</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>ToolsControlDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>266</x>
+     <y>497</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>enableRFFrequency()</slot>
+ </slots>
+</ui>

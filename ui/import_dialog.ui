@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ImportDialog</class>
+ <widget class="QDialog" name="ImportDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>466</width>
+    <height>225</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Import Lattice File</string>
+  </property>
+  <widget class="QDialogButtonBox" name="buttonBox">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>190</y>
+     <width>157</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEditOutputFile">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>20</y>
+     <width>291</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButtonOutputFile">
+   <property name="geometry">
+    <rect>
+     <x>400</x>
+     <y>20</y>
+     <width>31</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>...</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>20</y>
+     <width>81</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output File</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBoxParticles">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>130</y>
+     <width>85</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>41</x>
+     <y>75</y>
+     <width>299</width>
+     <height>76</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Particle Total  Energy [MeV]</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="ScientificDoubleSpinBox" name="techSpinBoxTotEnergy"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>Particle Kinetic Energy [MeV]</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="ScientificDoubleSpinBox" name="techSpinBoxKinEnergy"/>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>Particle Mass [MeV/c**2]</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="lineEditMass"/>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ScientificDoubleSpinBox</class>
+   <extends>QDoubleSpinBox</extends>
+   <header>ScientificDoubleSpinBox.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>ImportDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>239</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>ImportDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>239</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButtonOutputFile</sender>
+   <signal>clicked()</signal>
+   <receiver>ImportDialog</receiver>
+   <slot>setOutputFilename()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>405</x>
+     <y>41</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>223</x>
+     <y>118</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxParticles</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>ImportDialog</receiver>
+   <slot>setParticleMass(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>382</x>
+     <y>151</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>223</x>
+     <y>118</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditMass</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>ImportDialog</receiver>
+   <slot>updatedMass(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>279</x>
+     <y>133</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>232</x>
+     <y>112</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>techSpinBoxTotEnergy</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>ImportDialog</receiver>
+   <slot>updatedTotEnergy(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>294</x>
+     <y>86</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>361</x>
+     <y>202</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>techSpinBoxKinEnergy</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>ImportDialog</receiver>
+   <slot>updatedKinEnergy(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>295</x>
+     <y>110</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>460</x>
+     <y>166</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>setInputFilename()</slot>
+  <slot>setOutputFilename()</slot>
+  <slot>setParticleMass(QString)</slot>
+  <slot>updatedKinEnergy(double)</slot>
+  <slot>updatedTotEnergy(double)</slot>
+  <slot>updatedMass(QString)</slot>
+ </slots>
+</ui>
