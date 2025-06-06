@@ -1,4 +1,4 @@
-Copyright 1994-2025 Fermi Forward Discovery Group, LLC.
+Copyright (c) 2025 Fermi Forward Discovery Group, LLC.
 This material was produced under U.S. Government contract
 89243024CSC000002 for Fermi National Accelerator Laboratory (Fermilab),
 which is operated by Fermi Forward Discovery Group, LLC for the
@@ -24,4 +24,5 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 See the GNU General Public License for more details.
 
 https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+
 https://www.gnu.org/licenses/gpl-3.0.html
