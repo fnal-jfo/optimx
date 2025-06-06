@@ -10,6 +10,7 @@ Build Instructions
     - sqlite
 
 (2) create a build directory (e.g. in the top level source dir)
+
     mkdir build
     cd build
   
