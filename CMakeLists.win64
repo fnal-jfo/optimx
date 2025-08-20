@@ -564,22 +564,16 @@ target_link_libraries(optimx ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(optimx Qt5::Core)
 target_link_libraries(optimx Qt5::PrintSupport)
 target_link_libraries(optimx Qt5::Help)
-#TARGET_LINK_LIBRARIES(optimx gsl)
-TARGET_LINK_LIBRARIES(optimx d:/msys64/mingw64/lib/libgsl.a )
-TARGET_LINK_LIBRARIES(optimx e:/Users/Francois/repos/newoptimx/local/lib/libvsqlitepp.a)
-#TARGET_LINK_LIBRARIES(optimx sqlite3)
-TARGET_LINK_LIBRARIES(optimx d:/msys64/mingw64/lib/libsqlite3.a )
+TARGET_LINK_LIBRARIES(optimx gsl)
+TARGET_LINK_LIBRARIES(optimx vsqlitepp)
+TARGET_LINK_LIBRARIES(optimx sqlite3)
 
 add_library(optimx_sqlite_extensions SHARED MODULE ${MODULE_SOURCES})
 add_library(optimx_sqlite_carray     SHARED MODULE ${CARRAY_MODULE_SOURCES})
 
 # optional stuff for developent only 
-#LINK_DIRECTORIES(${CMAKE_SOURCE_DIR}/gslpp/lib)
 #TARGET_LINK_LIBRARIES(optimx fftw3_omp)
 #TARGET_LINK_LIBRARIES(optimx fftw3)
 #boost libraries are required for regex if g++ < 4.9
 #TARGET_LINK_LIBRARIES(optimx ${Boost_LIBRARIES} )
-#TARGET_LINK_LIBRARIES(optimx ${CMAKE_SOURCE_DIR}/gslpp/lib/libgslplusplus.so)
-#TARGET_LINK_LIBRARIES(optimx gslplusplus)
-
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DQT_NO_DEBUG_OUTPUT")

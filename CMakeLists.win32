@@ -552,21 +552,21 @@ add_executable( optimx WIN32 ${HEADERS} ${SOURCES} ${UI_RESOURCES_RCC} ${RES_FIL
 target_link_libraries(optimx Qt5::Widgets)
 target_link_libraries(optimx ${CMAKE_THREAD_LIBS_INIT})
 
+
 add_library(qwt-qt5 SHARED IMPORTED)
+
+# CUSTOM PROPERTIES FOR qwt ( you probably need to set this) 
 set_target_properties(qwt-qt5 PROPERTIES
-  IMPORTED_LOCATION "e:/Users/Francois/local/32bit/lib/qwt-qt5.dll"
-  IMPORTED_IMPLIB   "e:/Users/Francois/local/32bit/lib/libqwt-qt5.dll.a"
-  
-  INTERFACE_INCLUDE_DIRECTORIES "e:/Users/Francois/local/32bit/include/qwt-qt5"
+  IMPORTED_LOCATION ""
+  IMPORTED_IMPLIB   "libqwt-qt5.dll.a"
+  INTERFACE_INCLUDE_DIRECTORIES "32bit/include/qwt-qt5"
 )
 
 LINK_DIRECTORIES(${CMAKE_SOURCE_DIR}/gslpp/lib)
-#TARGET_LINK_LIBRARIES(optimx fftw3_omp)
-#TARGET_LINK_LIBRARIES(optimx fftw3)
 TARGET_LINK_LIBRARIES(optimx qwt-qt5)
 TARGET_LINK_LIBRARIES(optimx gsl)
 TARGET_LINK_LIBRARIES(optimx fmt)
-TARGET_LINK_LIBRARIES(optimx e:/Users/Francois/repos/newoptimx/local32/lib/libvsqlitepp.a)
+TARGET_LINK_LIBRARIES(optimx vsqlitepp)
 TARGET_LINK_LIBRARIES(optimx sqlite3)
 target_link_libraries(optimx Qt5::Widgets)
 target_link_libraries(optimx Qt5::Core)
@@ -576,7 +576,6 @@ target_link_libraries(optimx Qt5::Help)
 #boost libraries are required for regex if g++ < 4.9
 #TARGET_LINK_LIBRARIES(optimx ${Boost_LIBRARIES} )
 
-#TARGET_LINK_LIBRARIES(optimx ${CMAKE_SOURCE_DIR}/gslpp/lib/libgslplusplus.so)
-#TARGET_LINK_LIBRARIES(optimx gslplusplus)
-
+#TARGET_LINK_LIBRARIES(optimx fftw3_omp)
+#TARGET_LINK_LIBRARIES(optimx fftw3)
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DQT_NO_DEBUG_OUTPUT")
