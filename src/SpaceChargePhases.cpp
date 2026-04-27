@@ -36,6 +36,7 @@
 //  =================================================================
 //
 
+
 #include <limits>
 #include <iostream>
 #include <cstdlib> // for gentenv
@@ -180,10 +181,10 @@ void OptimMainWindow::spChargePhases(Twiss4D& v, BunchParam& bunch)
   //                     legendname xv       yv    n  axis             title                          bottom_title         color  
   //------------------------------------------------------------------------------------------------------------------------------------  
 
-  curvespecs.push_back({ "Q_1",        &x[0], &y[0][0], k, QwtSymbol::NoSymbol, QwtPlot::yLeft,   "Betatron size X&Y [cm]",   "" });  
-  curvespecs.push_back({ "Q_2",        &x[0], &y[1][0], k, QwtSymbol::NoSymbol, QwtPlot::yLeft,   "Betatron size X&Y [cm]",   "" });  
-  curvespecs.push_back({ "Nu_1",    &x[0], &y[2][0], k, QwtSymbol::NoSymbol, QwtPlot::yRight,  "Phase/(2*pi)",             "" });  
-  curvespecs.push_back({ "Nu_2",    &x[0], &y[3][0], k, QwtSymbol::NoSymbol, QwtPlot::yRight,  "Phase/(2*pi)",             "" });  
+  curvespecs.push_back({ "Q_1",        &x[0], &y[0][0], k, QwtSymbol::NoSymbol, QwtPlot::yLeft,   "Q_1, Q_2 Phases/(2*pi)",   "" });  
+  curvespecs.push_back({ "Q_2",        &x[0], &y[1][0], k, QwtSymbol::NoSymbol, QwtPlot::yLeft,   "Q_1, Q_2 Phases/(2*pi)",   "" });  
+  curvespecs.push_back({ "Nu_1",    &x[0], &y[2][0], k, QwtSymbol::NoSymbol, QwtPlot::yRight,     "Nu_1, Nu_2 Phases/(2*pi)", "" });  
+  curvespecs.push_back({ "Nu_2",    &x[0], &y[3][0], k, QwtSymbol::NoSymbol, QwtPlot::yRight,     "Nu_1, Nu_2 Phases/(2*pi)", "" });  
 
   addPlot( WindowId::PhaseSpCh, plotspecs, legodata );
 }
