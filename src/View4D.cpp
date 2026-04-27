@@ -36,6 +36,7 @@
 //  =================================================================
 //
 
+
 #include <iostream>
 #include <complex>
 #include <cmath>
@@ -246,6 +247,8 @@ void OptimMainWindow::cmdView4DPhases ()
     }
    else { 
      if(Get4DBetasFromFile(false, false, v)) return;
+     v.qx = 0.0;
+     v.qy = 0.0;
    }
   Phases4D(v);
 }
@@ -631,7 +634,7 @@ int OptimMainWindow::Get4DBetasFromFile(bool Reprint, bool cmdUpdate, Twiss4D& v
     v.qy    = modf(dat[1]/PI, &qint);
     v.qy    = v.qy <  -0.5 ? (v.qy +=1.0)      : v.qy; 
     v.qy    = v.qy >   0.5 ? (v.qy = 1.0-v.qy) : v.qy; 
-    
+
   }
   if(Reprint){
     sprintf(buf,"\tNu_1[deg]=%lg \tNu_2[deg]=%lg \tU=%lg", v.teta1*180./PI, v.teta2*180./PI, v.u);
@@ -1011,11 +1014,11 @@ void OptimMainWindow::Phases4D (Twiss4D& v)
       if(Lp  > Length_*k/(N-1) ){
           x[k]    =  Lp*.01;
 	  
-	  while(v.qx > 0.5 ) v.qx -= 0.5;
-	  while(v.qy > 0.5 ) v.qy -= 0.5;
-	  
-	  while(v.qx < -0.5 ) v.qx += 0.5;
-	  while(v.qy < -0.5 ) v.qy += 0.5;
+	  while (v.qx < -0.5 ) v.qx += 0.5;
+	  while (v.qy < -0.5 ) v.qy += 0.5;
+
+	  while (v.qx >  0.5 ) v.qx -= 0.5;
+	  while (v.qy >  0.5 ) v.qy -= 0.5;
 
 	  y[0][k] =  v.qx; //  -arg(ev[0][0])/(2.*PI);
 	  y[1][k] =  v.qy; //  -arg(ev[2][2])/(2.*PI);
@@ -1041,10 +1044,10 @@ void OptimMainWindow::Phases4D (Twiss4D& v)
     //                     legendname xv       yv    n  axis             title                          bottom_title         color 
     //------------------------------------------------------------------------------------------------------------------------------------  
 
-    curvespecs.push_back({ "Q_1",     &x[0], &y[0][0], k, QwtSymbol::NoSymbol, QwtPlot::yLeft,   "Phase/(2*pi)", "" });  
-    curvespecs.push_back({ "Q_2",     &x[0], &y[1][0], k, QwtSymbol::NoSymbol, QwtPlot::yLeft,   "Phase/(2*pi)", "" });  
-    curvespecs.push_back({ "Nu_1", &x[0], &y[2][0], k, QwtSymbol::NoSymbol, QwtPlot::yRight,  "Phase/(2*pi)", "" });  
-    curvespecs.push_back({ "Nu_2", &x[0], &y[3][0], k, QwtSymbol::NoSymbol, QwtPlot::yRight,  "Phase/(2*pi)", "" });  
+    curvespecs.push_back({ "Q_1",     &x[0], &y[0][0], k, QwtSymbol::NoSymbol, QwtPlot::yLeft,   "Q_1, Q_2 Phases/(2*pi)", "" });  
+    curvespecs.push_back({ "Q_2",     &x[0], &y[1][0], k, QwtSymbol::NoSymbol, QwtPlot::yLeft,   "Q_1, Q_2 Phases/(2*pi)", "" });  
+    curvespecs.push_back({ "Nu_1", &x[0], &y[2][0], k, QwtSymbol::NoSymbol, QwtPlot::yRight,     "Nu1,Nu_2 Phases/(2*pi)", "" });  
+    curvespecs.push_back({ "Nu_2", &x[0], &y[3][0], k, QwtSymbol::NoSymbol, QwtPlot::yRight,     "Nu1,Nu_2 Phases/(2*pi)", "" });  
   
     addPlot(WindowId::Phase4Ch, plotspecs, legodata); 
 }
