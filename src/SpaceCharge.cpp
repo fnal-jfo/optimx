@@ -466,6 +466,8 @@ void OptimMainWindow::cmdSpcharge_phases()
     spChargePhases(v, bunch);
   }
 #else
+   v.qx = 0.0;
+   v.qy = 0.0;
    spChargePhases(v, bunch);
 #endif
 }
