@@ -37,6 +37,7 @@
 //
 
 #include <platform.h>
+#include <ProgramConstants.h>
 #include <Constants.h>
 #include <ControlDialog.h>
 #include <GeneralPreferencesDialog.h>
@@ -67,9 +68,9 @@
 #include <vector>
 #include <functional>
 
-static const unsigned int LSTR = 1024;
 
-
+using ProgramConstants::NAME_LENGTH; 
+using ProgramConstants::LSTR; 
 using Constants::C_DERV1; 
 using Constants::C_DERV3;
 using Constants::C_CGS;

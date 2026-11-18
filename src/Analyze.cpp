@@ -89,9 +89,6 @@ using Utility::strippedName;
 using Utility::isValidType;
 
 static int ierr = 0; // error code 
-
-#define MAX_NMB_WHILE_CYCLES 10000
-
 static int const nmaxattr = 12; // max no of attributes
 
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -129,6 +126,9 @@ void OptimMainWindow::cmdAnalyze()
 
 int OptimMainWindow::analyzeElement(OptimEditor* editor, int nline, char *buf, int nmtr, std::shared_ptr<Element>& ep)
 {
+
+  using Globals::ext_dat_db;
+  
   double dat[nmaxattr];
   std::vector<double> vdat;
   char buferr[1024];       // buffer holding element attributes (as a string) 
@@ -152,9 +152,9 @@ int OptimMainWindow::analyzeElement(OptimEditor* editor, int nline, char *buf, i
 
 
     //    ep->setParameters(np, vdat, &ext_dat[ep->N], CtSt_.NStep);
-    ep->setParameters(np, dat, &ext_dat[ep->N], CtSt_.NStep);
+    ep->setParameters(np, dat, &Globals::ext_dat_db[floor(dat[4])], &CtSt_.NStep);
 
-    if(ext_dat[ep->N].n==0) {
+    if(Globals::ext_dat_db[ep->N].n==0) {
       replaceExistingLine(editor, nline-1);
       editor->highlightCurrentBlock();
       sprintf(buf,"File reference %d not found.",ep->N);
@@ -168,13 +168,13 @@ int OptimMainWindow::analyzeElement(OptimEditor* editor, int nline, char *buf, i
       return 1;
     }
 
-    if ( fabs( ext_dat[ep->N].x[ext_dat[ep->N].n-1] -
-               ext_dat[ep->N].x[0]-ep->length())>0.0001 )   {
+    if ( fabs( Globals::ext_dat_db[ep->N].x[Globals::ext_dat_db[ep->N].n-1] -
+               Globals::ext_dat_db[ep->N].x[0]-ep->length())>0.0001 )   {
       replaceExistingLine(editor, nline-1);
       editor->highlightCurrentBlock();
       sprintf(buf,"Cavity length of %g is not equal to its value of %g from file %d",
-	           ext_dat[ep->N].x[ext_dat[ep->N].n-1]-
-		   ext_dat[ep->N].x[0], ep->length(), ep->N);
+	      Globals::ext_dat_db[ep->N].x[Globals::ext_dat_db[ep->N].n-1]-
+	      Globals::ext_dat_db[ep->N].x[0], ep->length(), ep->N);
       OptimMessageBox::warning(this, "OptiM", (QString("Conversion Error: ")+ QString(buf)).toUtf8().data(), QMessageBox::Ok);  
       return 1;
     }
@@ -216,10 +216,10 @@ int OptimMainWindow::analyzeElement(OptimEditor* editor, int nline, char *buf, i
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-#define NBB_NAME 32
-
 int OptimMainWindow::analyze(bool Reprint, int NmbTurn)
 {
+
+ using ProgramConstants::MAX_NMB_WHILE_CYCLES; 
 
  auto& IncludeMode      = appstate.IncludeMode;
  auto& IncludeFileName  = appstate.IncludeFileName;
@@ -229,9 +229,9 @@ int OptimMainWindow::analyze(bool Reprint, int NmbTurn)
  double result;
  //char   buf[LSTR+1];
  //char   buf1[LSTR+1];
- char   buf[LSTR];
- char   buf1[LSTR]; 
- char   buf2[NAME_LENGTH];
+ char   buf[ProgramConstants::LSTR];
+ char   buf1[ProgramConstants::LSTR]; 
+ char   buf2[ProgramConstants::NAME_LENGTH];
  char*  bufpt;
  char*  bufpttmp;
  //char   str_res[LSTR+1];
@@ -241,12 +241,12 @@ int OptimMainWindow::analyze(bool Reprint, int NmbTurn)
  int    NmbWhileCycles   = 0;
  int    i, j, k, nmtr;
 
- char nmNp[NBB_NAME];
- char nmemx[NBB_NAME];
- char nmemy[NBB_NAME];
- char nmsigmas[NBB_NAME];
- char nmScolis[NBB_NAME];
- char nmnslice[NBB_NAME];
+ char nmNp[ProgramConstants::NBB_NAME];
+ char nmemx[ProgramConstants::NBB_NAME];
+ char nmemy[ProgramConstants::NBB_NAME];
+ char nmsigmas[ProgramConstants::NBB_NAME];
+ char nmScolis[ProgramConstants::NBB_NAME];
+ char nmnslice[ProgramConstants::NBB_NAME];
 
  
  if (!LatticeCh_) return 1;
@@ -310,7 +310,7 @@ int OptimMainWindow::analyze(bool Reprint, int NmbTurn)
        return 1;
      }
      if((result - 1.0e-10) > 0) {
-       if(NmbWhileCycles++ >  MAX_NMB_WHILE_CYCLES){
+       if(NmbWhileCycles++ > MAX_NMB_WHILE_CYCLES){
          OptimMessageBox::warning(this,"Syntax Error", "Loop iterations limit [10000] exceeded.", QMessageBox::Ok);
          return 1;
        }
@@ -436,8 +436,14 @@ int OptimMainWindow::analyze(bool Reprint, int NmbTurn)
 
   if(strcmpr("file reference start",buf)) {
 
-    ext_dat.resize(0);
-
+    for (int i=0; i<10; ++i) {
+      Globals::ext_dat_db[i].n    = 0;
+      Globals::ext_dat_db[i].name = "undefined";
+      Globals::ext_dat_db[i].x.resize(0);
+      Globals::ext_dat_db[i].y.resize(0);
+      Globals::ext_dat_db[i].v.resize(0);
+    }
+    
     while(1){
       nline = getLineCmt(editor, buf, LSTR, nline);
       if(nline<0) { 
@@ -955,6 +961,8 @@ int OptimMainWindow::analyze(bool Reprint, int NmbTurn)
 
 void OptimMainWindow::cmdAnalyzeHeader ()
 {                                      
+ using ProgramConstants::MAX_NMB_WHILE_CYCLES; 
+
  auto& IncludeMode      = appstate.IncludeMode;
  auto& IncludeFileName  = appstate.IncludeFileName;
  auto& InclLineNum      = appstate.InclLineNum;
@@ -1186,7 +1194,7 @@ int OptimMainWindow::getLineCalc(QPlainTextEdit* editor, char* buf, int /*lenstr
         }
         else {
            IncludeMode = true;
-      	   if( !fgets(buf, LSTR,fp) ) {
+      	   if( !fgets(buf,ProgramConstants::LSTR,fp) ) {
              fclose(fp);
              IncludeMode=false;
            }
@@ -1278,6 +1286,8 @@ void OptimMainWindow::replaceExistingLine(QPlainTextEdit* editor, int nline)
 void OptimMainWindow::cmdAnalyzeLine()  
 {
 
+  using ProgramConstants::MAX_NMB_WHILE_CYCLES;
+  
   auto& IncludeMode      = appstate.IncludeMode;
   auto& IncludeFileName  = appstate.IncludeFileName;
   auto& InclLineNum      = appstate.InclLineNum;

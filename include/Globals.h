@@ -42,7 +42,9 @@
 #include <PlotPreferences.h>
 #include <QString>
 #include <random>
+#include <Structs.h>
 #include <sqlite/connection.hpp>
+
 
 class SCalc;
 
@@ -96,9 +98,11 @@ struct OptimPreferences
     sqlite::connection* con; 
 };
 
+
 namespace Globals
 {
-    OptimPreferences& preferences();
+   extern std::vector<ExtData> ext_dat_db;
+   OptimPreferences& preferences();
 }
 
 #endif // GLOBALS_H

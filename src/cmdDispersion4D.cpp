@@ -47,6 +47,7 @@
 #include <QMdiArea>
 #include <QObject>
 
+#include <ProgramConstants.h>
 #include <Constants.h>
 #include <Element.h>
 #include <Control4DDialog.h>
@@ -67,20 +68,12 @@
 
 #include <QwtLegend>
 
+using ProgramConstants::LSTR;
 using Constants::PI;
-using Utility::matr_invert;
-using Utility::balanc;
-using Utility::elmhes;
-using Utility::hqr;
 using Utility::strcmpr;
 using Utility::decodeLine;
 using Utility::decodeExtLine;
 using Utility::filterName;
-
-//||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-
-#define LSTR 1024
 
 //|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

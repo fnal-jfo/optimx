@@ -48,6 +48,7 @@
 #include <Utility.h>
 #include <Element.h>
 #include <Constants.h>
+#include <ProgramConstants.h>
 #include <Structs.h>
 #include <Twiss.h>
 #include <cmath>
@@ -68,12 +69,11 @@
 #include <windows.h>
 #endif
 
-#define LSTR 1024
-#define NUMBER_THRESHOLD 1.e10
-#define NAME_LENGTH 32 
-
 // Utility routines 
 
+using ProgramConstants::LSTR;
+using ProgramConstants::NUMBER_THRESHOLD;
+using ProgramConstants::NAME_LENGTH; 
 using Constants::B_Euler;
 using Constants::EPS;
 using Constants::PI;
@@ -263,6 +263,7 @@ int GetUserNameLocal( char* buf,  long unsigned int* bufsize)
   #ifdef __linux
   return getlogin_r(buf, *bufsize);
   #endif
+  return 0;
 }
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

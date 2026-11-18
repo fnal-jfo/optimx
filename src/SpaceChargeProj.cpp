@@ -42,6 +42,7 @@
 
 #include <Element.h>
 #include <Cavity.h>
+#include <ProgramConstants.h>
 #include <Constants.h>
 #include <FunctionDialog.h>
 #include <OptimCalc.h>
@@ -68,6 +69,7 @@
 #include <memory>
 #include <iostream>
 
+using ProgramConstants::LSTR;
 using Constants::PI;
 using Constants::C_DERV1;
 
@@ -75,7 +77,6 @@ using Utility::strcmpr;
 using Utility::filterName;
 using Utility::decodeLine;
 
-#define LSTR 1024
 
 void OptimMainWindow::spChargeProj(Twiss4D& v, BunchParam& bunch)
 {

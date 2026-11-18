@@ -91,7 +91,7 @@ RMatrix Edge::rmatrix(double& alfap, double& energy, double ms, double& tetaY, d
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void Edge::setParameters( int np, double dat[], ... )
+void Edge::setParameters( int np, double const dat[], ... )
 {
   L_ = 0.0;     // 
 
@@ -109,7 +109,7 @@ void Edge::setParameters( int np, double dat[], ... )
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void Edge::setParameters( int np, std::vector<double> const& dat, ... )
+void Edge::setParameters( int np, std::vector<double> const dat, ... )
 {
   L_ = 0.0;     // 
 

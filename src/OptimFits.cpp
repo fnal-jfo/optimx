@@ -40,6 +40,7 @@
 #include <iomanip>
 #include <algorithm>
 
+#include <ProgramConstants.h>
 #include <OptimMainWindow.h>
 #include <OptimMdiSubWindow.h>
 #include <OptimEditor.h>
@@ -59,14 +60,14 @@
 #include <QRegularExpression>
 #include <memory>
 
+
+using ProgramConstants::NAME_LENGTH;
+using ProgramConstants::LSTR;
 using Utility::decodeLine;
 using Utility::strcmpr;
 using Utility::strcmpre;
 using Utility::getElmName;
 using Utility::getElmNameX;
-
-
-unsigned int const LSTR = 1024;
 
 char const  grname[] = "LBG";
 char const* FitNames = "ODBQCL";
@@ -249,7 +250,7 @@ int OptimMainWindow::GetFitParam (FitStep* fstep, Twiss vfin[],
    }
    
    if(nline == nmblines){
-     if(OptimQuestionMessage(this, "Fit", "There is no fitting block. Do you want to create it?",
+     if(OptimMessageBox::question(this, "Fit", "There is no fitting block. Do you want to create it?",
 			     QMessageBox::Yes|QMessageBox::No ) == QMessageBox::No ) return 1;
      QTextCursor cursor = editor->textCursor();
      cursor.movePosition( QTextCursor::Start);
@@ -1262,7 +1263,7 @@ err:  // er=1 - stop calculations
    editor->insertPlainText(buf); 
    editor->insertPlainText("\n");
 
-   if( OptimQuestionMessage( this,"Fit", "Do you want to write these fitting results to main file?",QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes) {  
+   if( OptimMessageBox::question( this,"Fit", "Do you want to write these fitting results to main file?",QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes) {  
      RewriteElementListFit( elmdict_, group, ngr);
      emit fitUndoAllowed(true);
    }
@@ -1283,7 +1284,7 @@ err2:  // er=2 cannot close or step is too small or length is negative; comes he
    
    QCoreApplication::processEvents();
    if( (CtSt_.IsRingCh ) && (er==0) ){
-     if(OptimQuestionMessage(this, "Fit", "Do you want to overwrite the initial betas with the new ones ?",
+     if(OptimMessageBox::question(this, "Fit", "Do you want to overwrite the initial betas with the new ones ?",
 			       QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes){
      findRMatrix(tm);
      if(find_tunes(tm, Length_, v, &s)){

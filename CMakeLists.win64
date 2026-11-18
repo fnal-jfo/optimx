@@ -34,11 +34,16 @@
 #
 #  =================================================================
 #
+#---------------------------------------------
+# CMakeLists.txt for OptimX Win64
+#
+# Author: ostiguy@fnal.gov
+#
 # cmake -DCMAKE_BUILD_TYPE=Release ..
 # cmake -DCMAKE_BUILD_TYPE=Debug ..
 #--------------------------------------------
 
-#cmake_minimum_required(VERSION 3.7.1) # setting this is required
+#cmake_minimum_required(VERSION 4.4.2) # setting this is required
 #project(optimx)                       # this sets the project name
 
 IF(NOT CMAKE_BUILD_TYPE)
@@ -100,18 +105,17 @@ include_directories(
 ${Boost_INCLUDE_DIR}
 ${CMAKE_SOURCE_DIR}/include
 ${CMAKE_SOURCE_DIR}/Dialogs/include 
-d:/msys64/mingw64/include/qwt-qt5
-e:/Users/Francois/local/64bit/include
+# other include paths ...  
 )
 
-# Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
 
-# Find the required Qt libraries
-find_package(Qt5Widgets)
-find_package(Qt5Core)
-find_package(Qt5PrintSupport)
-find_package(Qt5Help)
+# 2. Find the Qt6 Widgets package
+find_package(Qt6 REQUIRED COMPONENTS Widgets PrintSupport Help StateMachine)
+set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR}/ui)
+
 
 #Create code from a list of Qt designer ui files.
 #Options may be given to uic, such as those found when executing "uic -help"
@@ -386,7 +390,6 @@ src/CFEBend.cpp
 src/Cavity.cpp
 src/Channel.cpp
 src/CompactLegend.cpp
-src/Constants.cpp
 src/CustomEvents.cpp
 src/cmdBetas.cpp
 src/cmdBetasNew.cpp
@@ -547,9 +550,9 @@ set(CARRAY_MODULE_SOURCES
 src/carray.c
 )
 
-qt5_wrap_ui(UI_SOURCES ${UIS})
+qt6_wrap_ui(UI_SOURCES ${UIS})
 list(APPEND SOURCES ${UI_SOURCES})
-QT5_ADD_RESOURCES(UI_RESOURCES_RCC ${UI_RESOURCES})
+QT6_ADD_RESOURCES(UI_RESOURCES_RCC ${UI_RESOURCES})
 set(RES_FILES optim.rc)
 
 add_executable( optimx WIN32 ${HEADERS} ${SOURCES} ${UI_RESOURCES_RCC} ${RES_FILES} )
@@ -557,23 +560,29 @@ add_executable( optimx WIN32 ${HEADERS} ${SOURCES} ${UI_RESOURCES_RCC} ${RES_FIL
 #this is needed for the plugins
 set(CMAKE_EXE_LINKER_FLAGS  -Wl,-export-dynamic)
 
-TARGET_LINK_LIBRARIES(optimx qwt-qt5)
-target_link_libraries(optimx Qt5::Widgets)
+TARGET_LINK_LIBRARIES(optimx qwt-qt6)
+target_link_libraries(optimx Qt6::Widgets)
 target_link_libraries(optimx ${CMAKE_THREAD_LIBS_INIT})
-
-target_link_libraries(optimx Qt5::Core)
-target_link_libraries(optimx Qt5::PrintSupport)
-target_link_libraries(optimx Qt5::Help)
-TARGET_LINK_LIBRARIES(optimx gsl)
-TARGET_LINK_LIBRARIES(optimx vsqlitepp)
-TARGET_LINK_LIBRARIES(optimx sqlite3)
+target_link_libraries(optimx Qt6::StateMachine)
+target_link_libraries(optimx Qt6::Core)
+target_link_libraries(optimx Qt6::PrintSupport)
+target_link_libraries(optimx Qt6::Help)
+#TARGET_LINK_LIBRARIES(optimx gsl)
+TARGET_LINK_LIBRARIES(optimx d:/msys64/mingw64/lib/libgsl.a )
+TARGET_LINK_LIBRARIES(optimx e:/Users/Francois/repos/newoptimx/local/lib/libvsqlitepp.a)
+#TARGET_LINK_LIBRARIES(optimx sqlite3)
+TARGET_LINK_LIBRARIES(optimx d:/msys64/mingw64/lib/libsqlite3.a )
 
 add_library(optimx_sqlite_extensions SHARED MODULE ${MODULE_SOURCES})
 add_library(optimx_sqlite_carray     SHARED MODULE ${CARRAY_MODULE_SOURCES})
 
 # optional stuff for developent only 
+#LINK_DIRECTORIES(${CMAKE_SOURCE_DIR}/gslpp/lib)
 #TARGET_LINK_LIBRARIES(optimx fftw3_omp)
 #TARGET_LINK_LIBRARIES(optimx fftw3)
 #boost libraries are required for regex if g++ < 4.9
 #TARGET_LINK_LIBRARIES(optimx ${Boost_LIBRARIES} )
+#TARGET_LINK_LIBRARIES(optimx ${CMAKE_SOURCE_DIR}/gslpp/lib/libgslplusplus.so)
+#TARGET_LINK_LIBRARIES(optimx gslplusplus)
+
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DQT_NO_DEBUG_OUTPUT")

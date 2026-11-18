@@ -66,7 +66,7 @@ Sextupole::Sextupole(Sextupole const& o)
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void Sextupole::setParameters( int np, double dat[], ... )
+void Sextupole::setParameters( int np, double const dat[], ... )
 {
   double* rdat[] = { &L_, &S, &T_};
 
@@ -82,7 +82,7 @@ void Sextupole::setParameters( int np, double dat[], ... )
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void Sextupole::setParameters( int np, std::vector<double> const& dat, ... )
+void Sextupole::setParameters( int np, std::vector<double> const dat, ... )
 {
   double* rdat[] = { &L_, &S, &T_};
 

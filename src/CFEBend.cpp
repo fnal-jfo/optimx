@@ -68,7 +68,7 @@ void CFEBend::toString(char* buf) const
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void CFEBend::setParameters( int np, double dat[], ... )
+void CFEBend::setParameters( int np, double const dat[], ... )
 {
 
   double* rdat[] = { &L_, &B, &G, &S, &T_};
@@ -87,7 +87,7 @@ void CFEBend::setParameters( int np, double dat[], ... )
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void CFEBend::setParameters( int np, std::vector<double> const& dat, ... )
+void CFEBend::setParameters( int np, std::vector<double> const dat, ... )
 {
 
   double* rdat[] = { &L_, &B, &G, &S, &T_};

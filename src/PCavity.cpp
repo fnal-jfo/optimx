@@ -198,7 +198,7 @@ RMatrix PCavity::rmatrix(double& alfap, double& energy, double ms, double& tetaY
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void PCavity::setParameters( int np, double dat[], ... )
+void PCavity::setParameters( int np, double const dat[], ... )
 {
 
   double Ndum = 0.0;
@@ -223,7 +223,7 @@ void PCavity::setParameters( int np, double dat[], ... )
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void PCavity::setParameters( int np, std::vector<double> const& dat, ... )
+void PCavity::setParameters( int np, std::vector<double> const dat, ... )
 {
 
   double Ndum = 0.0;

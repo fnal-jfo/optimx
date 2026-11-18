@@ -101,7 +101,7 @@ RMatrix  XferMatrix::rmatrix(double& alfap, double& energy, double ms, double& t
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void XferMatrix::setParameters( int np, double dat[], ... )
+void XferMatrix::setParameters( int np, double const dat[], ... )
 {
 
 
@@ -132,7 +132,7 @@ void XferMatrix::setParameters( int np, double dat[], ... )
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void XferMatrix::setParameters( int np, std::vector<double> const& dat, ... )
+void XferMatrix::setParameters( int np, std::vector<double> dat, ... )
 {
 
 

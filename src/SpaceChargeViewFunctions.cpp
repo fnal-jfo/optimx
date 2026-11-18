@@ -116,7 +116,7 @@ int OptimMainWindow::tabulateFunctionsSpCh ( char* filenm,  FunctionDlgStruct*  
    if (filenm) {
      fp = fopen(filenm,"w");
      if( !fp) {
-       OptimCriticalMessage(this, "Error opening file for saving. File name -", filenm, QMessageBox::Ok);
+       OptimMessageBox::critical(this, "Error opening file for saving. File name -", filenm, QMessageBox::Ok);
        return 1;
      }
    }
@@ -316,7 +316,7 @@ int OptimMainWindow::tabulateFunctionsSpCh ( char* filenm,  FunctionDlgStruct*  
    if(fp) {
      fprintf(fp, "%s", outbufRaw.data());
       fclose(fp);
-      OptimInformationMessage( this, "File has been saved.", filenm, QMessageBox::Ok);
+      OptimMessageBox::information( this, "File has been saved.", filenm, QMessageBox::Ok);
     }
     else {
       editor->appendPlainText(outbufRaw.data());

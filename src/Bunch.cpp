@@ -68,7 +68,7 @@ int   Bunch::nlost() const
   
   // return lost_particles_.size();
 
-  int nlost;
+  int nlost = 0;
   for ( auto const& p: particles_) { // loop over all particles (Coordinates)
     if (p.lost ==0) ++nlost;
   }

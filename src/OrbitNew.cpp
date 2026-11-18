@@ -36,14 +36,6 @@
 //  =================================================================
 //
 
-//-------------------------------------------------------------------
-// OptiM   (c) FRA/Fermilab 
-// Please refer to OptiM.Copyright.txt for copyright and license 
-// information. All other rights reserved.
-//
-// ViewOrbitNew.cpp
-// ------------------------------------------------------------------
-
 #include <iostream>
 #include <iterator>
 #include <cmath>
@@ -53,6 +45,7 @@
 #include <OptimTextEditor.h>
 #include <OptimApp.h>
 #include <Element.h>
+#include <ProgramConstants.h>
 #include <Constants.h>
 #include <OrbitDialog.h> 
 
@@ -61,7 +54,7 @@ using Constants::C_DERV1;
 using Utility::filterName;
 
 #ifdef __linux__
-#define O_BINARY 0
+using ProgramConstants::O_BINARY;
 #endif
 
 

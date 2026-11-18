@@ -63,6 +63,10 @@ namespace compat = std;
 namespace compat = boost;
 #endif
 
+ using ProgramConstants::NAME_LENGTH;
+ using ProgramConstants::NELEM;
+ using ProgramConstants::LSTR;
+ 
  using Constants::PI;
  using Constants::C_CGS;
  using Constants::C_DERV1;
@@ -86,9 +90,6 @@ namespace compat = boost;
  using Utility::getVariableName;
  using Utility::fPrint;
 
- #define NELEM   8
- #define LSTR    512
- 
 
 void OptimMainWindow::cmdCompress ()
 {

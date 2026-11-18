@@ -42,6 +42,7 @@
 
 #include <Element.h>
 #include <Cavity.h>
+#include <ProgramConstants.h>
 #include <Constants.h>
 #include <FunctionDialog.h>
 #include <OptimCalc.h>
@@ -68,14 +69,13 @@
 #include <memory>
 #include <iostream>
 
+using ProgramConstants::LSTR;
 using Constants::PI;
 using Constants::C_DERV1;
 
 using Utility::strcmpr;
 using Utility::filterName;
 using Utility::decodeLine;
-
-#define LSTR 1024
 
 
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -105,7 +105,10 @@ int OptimMainWindow::GetSpaceChargeParam(bool Reprint, BunchParam& bunch)
    }
    // Creating Space Charge Block
    if(nline == nmblines){
-     if( OptimQuestionMessage(this, "Space charge", "There is no SpaceChargeBlock. Do you want to create it?", QMessageBox::Yes|QMessageBox::No) ==  QMessageBox::No) return 1;
+     auto button = OptimMessageBox::question(this, "Space charge", "There is no SpaceChargeBlock. Do you want to create it?",
+					     QMessageBox::Yes|QMessageBox::No);
+     if (button == QMessageBox::No) return 1;
+
      replaceLine(editor, nline-1, buf);
      QTextCursor cursor = editor->textCursor();
      cursor.clearSelection();

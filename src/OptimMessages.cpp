@@ -43,57 +43,37 @@
 #include <Qt>
 
 
-static QMessageBox*     msgbox = 0; 
-
 //|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-QMessageBox::StandardButton OptimMessageBox::warning( QWidget* parent, char const* title, char const* text, 
+QMessageBox::StandardButton OptimMessageBox::warning( QWidget* parent,QString const& title, QString const& text, 
                           QMessageBox::StandardButtons buttons, QMessageBox::StandardButton defaultButton) 
 {
   bool guimode = qobject_cast<OptimApp*>(qApp)->guimode_; 
-  if (guimode) {
-    if (!msgbox) { msgbox = new QMessageBox(0); }
-    msgbox->setStandardButtons(buttons);
-    msgbox->setDefaultButton(defaultButton);
-    msgbox->setWindowTitle(title);
-    msgbox->setText(text);
-    msgbox->setIcon(QMessageBox::Warning);
-	msgbox->setWindowFlags(Qt::WindowStaysOnTopHint | msgbox->windowFlags()); 
-	msgbox->show();
-    
-    return static_cast<QMessageBox::StandardButton>(msgbox->exec());
 
+
+  if (guimode) {
+    return QMessageBox::warning( parent, title, text, buttons, defaultButton);
   }  
   else {
-    std::cout << "***Warning*** " << title << " : " << text  << std::endl;
-    return  static_cast<QMessageBox::StandardButton>(QMessageBox::Accepted); 
+    std::cout << "***Warning*** " << title.toUtf8().constData() << " : " << text.toUtf8().constData()  << std::endl;
+    return  QMessageBox::StandardButton(QMessageBox::Accepted); 
   }
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-QMessageBox::StandardButton OptimCriticalMessage( QWidget* parent, char const* title, char const* text, 
-                                                  QMessageBox::StandardButtons buttons, QMessageBox::StandardButton defaultButton) 
+QMessageBox::StandardButton  OptimMessageBox::critical( QWidget* parent, QString const& title, QString const& text, 
+                                      QMessageBox::StandardButtons buttons, QMessageBox::StandardButton defaultButton) 
 {
   bool guimode = qobject_cast<OptimApp*>(qApp)->guimode_; 
   if (guimode) {
-    if (!msgbox) { msgbox = new QMessageBox(0); }
-    msgbox->setStandardButtons(buttons);
-    msgbox->setDefaultButton(defaultButton);
-    msgbox->setWindowTitle(title);
-    msgbox->setText(text);
-    msgbox->setIcon(QMessageBox::Critical);
-	msgbox->setWindowFlags(Qt::WindowStaysOnTopHint | msgbox->windowFlags()); 
-	msgbox->show();
-
-    return static_cast<QMessageBox::StandardButton>(msgbox->exec());
-
+    return QMessageBox::critical( parent, title, text,buttons, defaultButton);
   }
   else {
-    std::cout << "***Critical*** " << title << " : " << text  << std::endl;
-    return  static_cast<QMessageBox::StandardButton>(QMessageBox::Accepted); 
+    std::cout << "***Critical*** " << title.toUtf8().constData() << " : " << text.toUtf8().constData()  << std::endl;
+    return   QMessageBox::StandardButton(QMessageBox::Accepted); 
   }
 }
 
@@ -101,52 +81,34 @@ QMessageBox::StandardButton OptimCriticalMessage( QWidget* parent, char const* t
 //|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-QMessageBox::StandardButton OptimInformationMessage(QWidget* parent, char const* title, char const* text, 
-                                                    QMessageBox::StandardButtons buttons, QMessageBox::StandardButton defaultButton)
+QMessageBox::StandardButton  OptimMessageBox::information (QWidget* parent, QString const& title, QString const& text, 
+                                         QMessageBox::StandardButtons buttons, QMessageBox::StandardButton defaultButton)
 
 {
   bool guimode = qobject_cast<OptimApp*>(qApp)->guimode_; 
   if (guimode) {
-    if (!msgbox) { msgbox = new QMessageBox(0); }
-    msgbox->setStandardButtons(buttons);
-    msgbox->setDefaultButton(defaultButton);
-    msgbox->setWindowTitle(title);
-    msgbox->setText(text);
-    msgbox->setIcon(QMessageBox::Information);
-	msgbox->setWindowFlags(Qt::WindowStaysOnTopHint | msgbox->windowFlags());
-	msgbox->show();
-
-    return static_cast<QMessageBox::StandardButton>(msgbox->exec());
-
+    return QMessageBox::information (parent, title, text, buttons, defaultButton);
   }
   else {
-    std::cout << "***Information*** " << title << " : " << text  << std::endl;
-    return  static_cast<QMessageBox::StandardButton>(QMessageBox::Accepted); 
+    std::cout << "***Information*** " << title.toUtf8().constData() << " : " << text.toUtf8().constData()  << std::endl;
+    return   QMessageBox::StandardButton(QMessageBox::Accepted); 
   }
 }
 
 //|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-int OptimQuestionMessage(QWidget* parent, char const* title, char const* text, 
+QMessageBox::StandardButton  OptimMessageBox::question(QWidget* parent, QString const& title, QString const& text, 
                          QMessageBox::StandardButtons buttons, QMessageBox::StandardButton defaultButton)
 
 {
   bool guimode = qobject_cast<OptimApp*>(qApp)->guimode_; 
   if (guimode) {
-    if (!msgbox) { msgbox = new QMessageBox(0); }
-    msgbox->setStandardButtons(buttons);
-    msgbox->setDefaultButton(defaultButton);
-    msgbox->setWindowTitle(title);
-    msgbox->setText(text);
-    msgbox->setIcon(QMessageBox::Question);
-    msgbox->show();
-    return static_cast<QMessageBox::StandardButton>(msgbox->exec());
-
+    return QMessageBox::question(parent, title, text, buttons, defaultButton);
   }
   else {
-    std::cout << "***Question*** " << title << " : " << text  << std::endl;
-    return  static_cast<QMessageBox::StandardButton>(QMessageBox::Accepted); 
+    std::cout << "***Question*** " << title.toUtf8().constData() << " : " << text.toUtf8().constData()  << std::endl;
+    return   QMessageBox::StandardButton(QMessageBox::Accepted); 
   }
 }
 

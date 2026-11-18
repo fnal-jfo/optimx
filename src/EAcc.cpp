@@ -83,7 +83,7 @@ EAcc* EAcc::split( int nslices) const
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void EAcc::setParameters( int np, double dat[], ... )
+void EAcc::setParameters( int np, double const dat[], ... )
 {
 
   double* rdat[] = {&S, &B}; 
@@ -99,7 +99,7 @@ void EAcc::setParameters( int np, double dat[], ... )
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void EAcc::setParameters( int np, std::vector<double> const& dat, ... )
+void EAcc::setParameters( int np, std::vector<double> const dat, ... )
 {
 
   double* rdat[] = {&S, &B}; 

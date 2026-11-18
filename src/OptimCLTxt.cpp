@@ -59,6 +59,7 @@
 #include <TrackParam.h>
 #include <Utility.h>
 #include <Constants.h>
+#include <ProgramConstants.h>
 #include <LatticeDialog.h>
 #include <MatrixDialog.h>
 #include <OptimMessages.h>
@@ -76,6 +77,12 @@
 #include <QApplication>
 #include <QPointer>
 
+using ProgramConstants::LSTR;
+#ifdef __linux__
+using ProgramConstants::O_BINARY;
+#endif
+
+
 using Constants::PI;
 using Constants::C_DERV1;
 using Constants::KVSR;
@@ -83,12 +90,6 @@ using Constants::KE;
 using Constants::C_CGS;
 using Utility::filterName;
 using Utility::matr_invert;
-
-#define LSTR 1024
-
-#ifdef __linux__
-#define O_BINARY 0
-#endif
 
 
 
@@ -438,7 +439,7 @@ int OptimMainWindow::ViewFunctions (char const* filenm, FunctionDlgStruct* NStf,
    if(filenm){
      fprintf(fp,"%s \n", mbufRaw.data());
      if  ( !fclose(fp) ) { 
-	  OptimInformationMessage( this, "File Saved -", filenm, QMessageBox::Ok);
+       OptimMessageBox::information( this, "File Saved -", filenm, QMessageBox::Ok);
      }
    }
 

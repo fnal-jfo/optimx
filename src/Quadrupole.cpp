@@ -172,7 +172,7 @@ RMatrix Quadrupole::rmatrixsc( double& alfap, double& Enr, double ms, double cur
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void Quadrupole::setParameters( int np, double dat[], ... )
+void Quadrupole::setParameters( int np, double const dat[], ... )
 {
   double* rdat[] = { &L_, &G, &T_, &ofsX_, &ofsY_};
   for (int i=0; i<np; ++i) {
@@ -192,7 +192,7 @@ void Quadrupole::setParameters( int np, double dat[], ... )
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void Quadrupole::setParameters( int np, std::vector<double> const& dat, ... )
+void Quadrupole::setParameters( int np, std::vector<double> const dat, ... )
 {
   double* rdat[] = { &L_, &G, &T_, &ofsX_, &ofsY_};
   for (int i=0; i<np; ++i) {

@@ -73,8 +73,6 @@
 #include <Cavity.h>
 #include <OptimPlot.h>
 
-#define MAXFILES 10
-
  class QPlainTextEdit;
  class OptimEditor;
  class OptimTextEditor;
@@ -703,7 +701,6 @@ class OptimMainWindow : public QMainWindow {
      FunctionDlgStruct            NStf_;
      SpaceChargeControlStruct     SCSt_;  // space charge dialog struct;    
 
-     std::vector<ExtData> ext_dat; 
      char    MainFileDir[256];   
 
      bool interrupted_;    //  true if user requested interruption of a fit  

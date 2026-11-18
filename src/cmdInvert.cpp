@@ -37,6 +37,7 @@
 //
 
 #include <platform.h>
+#include <ProgramConstants.h>
 #include <Constants.h>
 #include <Element.h>
 #include <Globals.h>
@@ -55,8 +56,8 @@
 #include <algorithm>
 #include <iomanip>
 
-static const unsigned int LSTR = 1024;
-
+using ProgramConstants::LSTR;
+using ProgramConstants::NAME_LENGTH;
 using Utility::decodeLine;
 using Utility::getFileNameOpt;
 using Utility::decodeNumber;
@@ -83,9 +84,11 @@ void OptimMainWindow::cmdEditInvert ()
   OptimEditor* editor = qobject_cast<OptimEditor*>(LatticeCh_->widget() ); 
   if (!editor) return;
 
-  if( OptimInformationMessage( this, "Inverse Lattice",
+  auto button = OptimMessageBox::information( this, "Inverse Lattice",
      "Lattice inversion requires an inversion of dipole and cavity fields. This operation may destroy the connection with the math-header"
-			       "for these elements. Continue ?", (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::No ) return;
+					      "for these elements. Continue ?", (QMessageBox::Yes | QMessageBox::No));
+
+  if (button == QMessageBox::No ) return;
 			       
   Element elm;
   int i, j, nline=0;
@@ -251,7 +254,7 @@ void OptimMainWindow::cmdEditInvert ()
 
    } while (nline>0);
 
-   OptimInformationMessage(this, "Inverse Lattice", 
+   OptimMessageBox::information(this, "Inverse Lattice", 
    "Remember that corrector fields were not reversed. Should this be required, it will have to be done manually.",
 			    QMessageBox::Ok);
 

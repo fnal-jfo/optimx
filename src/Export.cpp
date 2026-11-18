@@ -257,7 +257,7 @@ void OptimMainWindow::cmdExportResolve()
   } // for
   fprintf(fp, " END_BEAM_LINE;\n");
 
-OptimInformationMessage(this, "Export is done to file", fileto.trimmed().toUtf8().data(), QMessageBox::Ok);
+  OptimMessageBox::information(this, "Export is done to file", fileto.trimmed().toUtf8().data(), QMessageBox::Ok);
   return;
 }
 
@@ -493,7 +493,7 @@ void OptimMainWindow::cmdExportDimad ()  // ExportMad
    fprintf(fp, "\nsurvey,\n\nstop\n");
    fclose(fp);
    delete [] Enr;
-   OptimInformationMessage(this, "Done exporting to file", fileto.trimmed().toUtf8().data(), QMessageBox::Ok);
+   OptimMessageBox::information(this, "Done exporting to file", fileto.trimmed().toUtf8().data(), QMessageBox::Ok);
    return;
 }
 
@@ -772,7 +772,7 @@ prquad:	fprintf(fp,"%s: QUADRUPOLE,  L=%g,  K1=%g",pname, L, 10000.*ep->G/Hrt);
     fprintf(fp, "\nstop\n");
     fclose(fp);
     delete [] Enr;
-    OptimInformationMessage(this, "Done exporting to file ", fileto.toUtf8().data(), QMessageBox::Ok);
+    OptimMessageBox::information(this, "Done exporting to file ", fileto.toUtf8().data(), QMessageBox::Ok);
     return;
 }
 
@@ -1351,7 +1351,7 @@ if( !(fp=fopen(fileto.toUtf8().data(),"w")) ) {
     fprintf(fp, "STOP\n");
     
     //OptimInformationMessage(this, "Export to MAD8", splitText(fileto.toUtf8().data()), QMessageBox::Ok);
-     OptimInformationMessage(this, "Export to MAD8", fileto.toUtf8().data(), QMessageBox::Ok);
+    OptimMessageBox::information(this, "Export to MAD8", fileto.toUtf8().data(), QMessageBox::Ok);
 
     return;
 }

@@ -68,6 +68,23 @@ namespace compat = std;
 namespace compat = boost;
 #endif
 
+ using ProgramConstants::N_PARAM_NAME;
+ using ProgramConstants::NAME_LENGTH;
+ using ProgramConstants::N_NAMES; //20000
+ using ProgramConstants::LBUF;    //256
+ using ProgramConstants::NLINES;  //4
+ using ProgramConstants::NELEM;   //8
+ using ProgramConstants::LSTRL;   //512
+ using ProgramConstants::LSTR;    //512
+ using ProgramConstants::ARG_LEN; //10
+ using ProgramConstants::NLINES_ELM; //9
+ using ProgramConstants::N_PARAM_NAME_TOTAL; //17
+ using ProgramConstants::N_UNIT_NAME; //7
+ using ProgramConstants::LEN_BUF; //1200
+ using ProgramConstants::LMADBUF;  // 1000
+
+
+
  using Constants::PI;
  using Constants::C_CGS;
  using Constants::C_DERV1;
@@ -91,14 +108,6 @@ namespace compat = boost;
  using Utility::getVariableName;
  using Utility::fPrint;
  
- #define N_NAMES 20000
- #define LBUF    256
- #define NLINES  4
- #define NELEM   8
- #define LSTRL   512
- #define LSTR    512
- #define ARG_LEN 10
-
  struct ename {char n[11]; double L; char newname[11];};
 
  static char const *res_par[] = {"LENGTH",   "B0",   "B1",    "B2",   "ANGLE", "BETA_IN",
@@ -546,9 +555,6 @@ void OptimMainWindow::cmdImportResolve ()
 // DIMAD import
 //=====================================================================
 
-#define NLINES_ELM 9
-#define N_PARAM_NAME_TOTAL 17
-#define N_UNIT_NAME 7
 
 static char const* param_name[N_PARAM_NAME_TOTAL] = {
 	"LENGTH",  "BENDING ANGLE", 	"BENDING RADIUS",  "HALFGAP",
@@ -576,8 +582,6 @@ void OptimMainWindow::PrintToWindow(char const* buf, char const* buf2, QPlainTex
 
 //return: 1 - OK; 0 - reading error, or EOF, or syntax error; 2 - End list of Element properties
 // buf - keeps last line which was read
-
-#define LEN_BUF 1200
 
 int OptimMainWindow::ReadElemDimad(FILE *fp, char* buf, dimad* el, QPlainTextEdit* editor)
 {
@@ -888,8 +892,6 @@ void OptimMainWindow::cmdImportDimad ()
 
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-
-#define LMADBUF 1000
 
 static char const* mad_types[] = { "MARKER"
 				 "DRIFT",

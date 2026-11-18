@@ -51,6 +51,7 @@
 #include <RMatrix.h>
 #include <OptimCalc.h>
 #include <Constants.h>
+#include <ProgramConstants.h>
 #include <ParticleTrackingDialog.h>
 #include <OrbitDialog.h>
 #include <EditReadDialog.h>
@@ -71,13 +72,12 @@
 #include <sqlite/query.hpp>
 #include <sqlite3.h>
 
+using ProgramConstants::LSTR;
 using Utility::decodeExtLine;
 using Utility::filterName;
 using Utility::strcmpr;
 using Utility::GetUserNameLocal;
 using Constants::PI;
-
-#define LSTR 1024
 
 enum  optionIndex { UNKNOWN, TWISS, TWISSMAD, COUPLEDTWISS, COUPLEDTWISSSC, CENTROID, ORBIT, READBDL,  WRITESNAP, MULTIPTRACK, HELP };
 

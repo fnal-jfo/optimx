@@ -321,7 +321,7 @@ RMatrix CFBend::rmatrixsc(double& alfap, double& energy, double ms, double curre
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void CFBend::setParameters( int np, double dat[], ... )
+void CFBend::setParameters( int np, double const dat[], ... )
 {
 
   double* rdat[] = { &L_, &B, &G, &T_, &S};
@@ -340,7 +340,7 @@ void CFBend::setParameters( int np, double dat[], ... )
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void CFBend::setParameters( int np, std::vector<double> const& dat, ... )
+void CFBend::setParameters( int np, std::vector<double> const dat, ... )
 {
 
   double* rdat[] = { &L_, &B, &G, &T_, &S};

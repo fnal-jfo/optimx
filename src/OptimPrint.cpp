@@ -74,8 +74,9 @@ void OptimMainWindow::cmdSetupPrinter()
 void OptimMainWindow::cmdPrintPreview() 
 {
 
-  std::unique_ptr<QPrintPreviewDialog> preview( new QPrintPreviewDialog( &printer_, this ));
-  connect( preview.get(), SIGNAL(paintRequested(QPrinter*)), this, SLOT(print(QPrinter*)) );
+  QPrintPreviewDialog* preview = new QPrintPreviewDialog( &printer_, this );
+  preview->setAttribute(Qt::WA_DeleteOnClose); 
+  connect( preview, SIGNAL(paintRequested(QPrinter*)), this, SLOT(print(QPrinter*)) );
   preview->exec();
   
 }

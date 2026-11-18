@@ -38,6 +38,7 @@
 
 #include <Utility.h>
 #include <SCalculator.h>
+#include <ProgramConstants.h>
 #include <Globals.h>
 
 using Utility::checkComment;
@@ -47,7 +48,7 @@ using Utility::getVariableName;
 using Utility::strcmpr;
 using Utility::trim;
 
-#define LSTR 1024
+using ProgramConstants::LSTR;
 
 namespace Utility {
   

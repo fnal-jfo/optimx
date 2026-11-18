@@ -37,6 +37,7 @@
 //
 
 #include <Globals.h>
+#include <ProgramConstants.h>
 #include <QSettings>
 #include <QColor>
 
@@ -54,11 +55,10 @@ GlobalState appstate;
 
 namespace Globals
 {
+  std::vector<ExtData> ext_dat_db(ProgramConstants::MAXFILES);
 
-  
 OptimPreferences& preferences()
 {
-
   static  OptimPreferences prefer;
 
   static  bool first_call = true;

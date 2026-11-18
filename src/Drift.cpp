@@ -69,7 +69,7 @@ Drift*  Drift::clone() const
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void Drift::setParameters( int np, double dat[], ... )
+void Drift::setParameters( int np, double const dat[], ... )
 { 
 
   L_ = dat[0];
@@ -80,7 +80,7 @@ void Drift::setParameters( int np, double dat[], ... )
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void Drift::setParameters( int np, std::vector<double> const& dat, ... )
+void Drift::setParameters( int np, std::vector<double> const dat, ... )
 { 
 
   L_ = dat[0];

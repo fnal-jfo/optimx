@@ -40,6 +40,7 @@
 #include <omp.h>
 #include <sqlite3.h>
 #include <sqlite/private/private_accessor.hpp>
+#include <ProgramConstants.h>
 #include <Constants.h>
 #include <Globals.h>
 #include <BeamMoments.h>
@@ -77,16 +78,10 @@
 #include <algorithm>
 #include <functional>
 
-//using Utility::gauss;
-//using Utility::decodeExtLine;
-//using Utility::strcmpr;
-//using Utility::filterName;
-//using Utility::Filter7;
-
+using ProgramConstants::LSTR;
 using Constants::PI;
 using Constants::C_DERV1;
 
-#define LSTR 1024
 
 void OptimTrackerNew::cmdTrackerPlotDistribution()
 {

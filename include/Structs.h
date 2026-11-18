@@ -39,16 +39,13 @@
 #ifndef STRUCTS_H
 #define STRUCTS_H
 
-#define N_PARAM_NAME 9      // for import to DIMAD
-#define NAME_LENGTH 32
-
-//#define N_ELM_FIT 50 //Nunber of Elements in a fitting group
-//#define STEP_MIN 1.e-5
+#include <ProgramConstants.h>
 
 #include <complex>
 #include <iostream>
 #include <array>
 #include <vector>
+#include <string>
 #include <initializer_list>
 
 #include <RMatrixFwd.h>
@@ -60,7 +57,7 @@ enum SubSpace { Horizontal=0, Vertical=2, Longitudinal=4};
 
 struct resolve { 
   
-   char name[NAME_LENGTH]; 
+   char name[ProgramConstants::NAME_LENGTH]; 
    double L; 
    double B; 
    double G; 
@@ -79,17 +76,17 @@ struct resolve {
 struct dimad {
 
   char tip; 
-  char name[NAME_LENGTH]; 
-  double v[N_PARAM_NAME]; 
+  char name[ProgramConstants::NAME_LENGTH]; 
+  double  v[ProgramConstants::N_PARAM_NAME]; 
 
 };
 
 
 struct ExtData {
-   
-  ExtData() { name[0] = 0; n=0; } 
-  char name[NAME_LENGTH]; 
-  int n; 
+  ExtData() { name = "undefined"; n=0; } 
+  std::string name;  // file name 
+  int n;             // no of data points  
+
   std::vector<double> x;
   std::vector<double> y;  
   std::vector<double> v;

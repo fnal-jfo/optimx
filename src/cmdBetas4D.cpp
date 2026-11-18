@@ -44,6 +44,7 @@
 #include <memory>
 #include <cstring>
 
+#include <ProgramConstants.h>
 #include <Constants.h>
 #include <Element.h>
 #include <OptimTextEditor.h>
@@ -54,6 +55,7 @@
 #include <Twiss.h>
 #include <RMatrix.h>
 
+using ProgramConstants::LSTR;
 using Constants::PI;
 
 using Utility::strcmpr;
@@ -61,9 +63,6 @@ using Utility::filterName;
 
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-
-#define LSTR 1024
-
 
 
 void OptimMainWindow::cmdView4DBeta ()

@@ -79,7 +79,7 @@ RMatrix WakeField::rmatrix(double& alfap, double& energy, double ms, double& tet
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void WakeField::setParameters( int np, double dat[], ... )
+void WakeField::setParameters( int np, double const dat[], ... )
 {
   L_ = 0.0; 
 }
@@ -87,7 +87,7 @@ void WakeField::setParameters( int np, double dat[], ... )
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void WakeField::setParameters( int np, std::vector<double> const& dat, ... )
+void WakeField::setParameters( int np, std::vector<double> const dat, ... )
 {
   L_ = 0.0; 
 }

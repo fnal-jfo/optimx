@@ -41,6 +41,7 @@
 #include <omp.h>
 #include <memory>
 
+#include <ProgramConstants.h>
 #include <Constants.h>
 #include <BeamMoments.h>
 #include <Globals.h>
@@ -75,10 +76,10 @@
 #include <sqlite/query.hpp>
 #include <sqlite3.h>
 
+using ProgramConstants::LSTR;
 using Constants::PI;
 using Constants::C_DERV1;
 
-#define LSTR 1024
  
 // .................................................................
 // loss_  array :  0 (no loss); 1(ampl. > 10 m); 2(lost on aperture) 

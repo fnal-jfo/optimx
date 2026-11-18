@@ -49,6 +49,7 @@
 #include <QObject>
 #include <fmt/format.h>
 
+#include <ProgramConstants.h>
 #include <Constants.h>
 #include <Element.h>
 #include <Control4DDialog.h>
@@ -69,11 +70,9 @@
 
 #include <QwtLegend>
 
+using ProgramConstants::LSTR;
+using ProgramConstants::MAXDAT;
 using Constants::PI;
-using Utility::matr_invert;
-using Utility::balanc;
-using Utility::elmhes;
-using Utility::hqr;
 using Utility::strcmpr;
 using Utility::decodeLine;
 using Utility::decodeExtLine;
@@ -81,8 +80,6 @@ using Utility::filterName;
 
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-
-#define LSTR 1024
 
 
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -297,8 +294,6 @@ void OptimMainWindow::cmdView4DProjection()
 
 void OptimMainWindow::cmdToolsShowExtern ()
 {
-  #define MAXDAT 20
-  
   char buf[256];  
 
   ExterPlotDlgStruct st;
@@ -428,7 +423,9 @@ int OptimMainWindow::Get4DBetasFromFile(bool Reprint, bool cmdUpdate, Twiss4D& v
   }
   // Creating 4D beta block
   if(nline == nmblines){
-    if (OptimInformationMessage(this, "4D View", "There is no 4D_BetaBlock. Do you want to create it?", QMessageBox::Yes|QMessageBox::No) == QMessageBox::No )return 1;
+    auto button = OptimMessageBox::information(this, "4D View", "There is no 4D_BetaBlock. Do you want to create it?",
+					       QMessageBox::Yes|QMessageBox::No);
+    if (button == QMessageBox::No ) return 1;
     replaceLine(editor, nline-1, buf);
     QTextCursor cursor = editor->textCursor();
     cursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor); 
@@ -1014,11 +1011,11 @@ void OptimMainWindow::Phases4D (Twiss4D& v)
       if(Lp  > Length_*k/(N-1) ){
           x[k]    =  Lp*.01;
 	  
-	  while (v.qx < -0.5 ) v.qx += 0.5;
-	  while (v.qy < -0.5 ) v.qy += 0.5;
-
-	  while (v.qx >  0.5 ) v.qx -= 0.5;
-	  while (v.qy >  0.5 ) v.qy -= 0.5;
+	  while(v.qx > 0.5 ) v.qx -= 0.5;
+	  while(v.qy > 0.5 ) v.qy -= 0.5;
+	  
+	  while(v.qx < -0.5 ) v.qx += 0.5;
+	  while(v.qy < -0.5 ) v.qy += 0.5;
 
 	  y[0][k] =  v.qx; //  -arg(ev[0][0])/(2.*PI);
 	  y[1][k] =  v.qy; //  -arg(ev[2][2])/(2.*PI);

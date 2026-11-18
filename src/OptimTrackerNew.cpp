@@ -43,6 +43,7 @@
 #include <memory>
 #include <spdlog/spdlog.h>
 
+#include <ProgramConstants.h>
 #include <Constants.h>
 #include <BeamMoments.h>
 #include <Globals.h>
@@ -120,8 +121,7 @@ using Utility::filterName;
 using Utility::Filter7;
 using Constants::PI;
 using Constants::C_DERV1;
-
-#define LSTR 1024
+using ProgramConstants::LSTR;
  
 // .................................................................
 // loss_  array :  0 (no loss); 1(ampl. > 10 m); 2(lost on aperture) 
@@ -715,7 +715,8 @@ void OptimTrackerNew::cmdParameters()
 	 // elm_selection is a std::map
          // show a table of selected elements 
 	 elm_selection_.display();
- 	 OptimInformationMessage(this, "Tracker ", (QString().setNum(elm_selection_.size()) + QString(" elements selected.")).toUtf8().data(), QMessageBox::Ok);
+	 OptimMessageBox::information(this, "Tracker ", (QString().setNum(elm_selection_.size()) + QString(" elements selected.")).toUtf8().data(),
+				      QMessageBox::Ok);
        }
        break;
   case TrackerParameters::specific:     
@@ -1098,7 +1099,7 @@ int OptimTrackerNew::trackBunchExact(Element const* ep, double Enr0,  RMatrix_t<
   
   if( toupper(ep->name()[0])=='Y') {  
     // wake field
-    rt = trackWake(ep, v, N, Enr0, mainw_->ms, &(mainw_->ext_dat[ep->N]));
+    rt = trackWake(ep, v, N, Enr0, mainw_->ms, &Globals::ext_dat_db[ep->N]);
     if(rt) {
       OptimMessageBox::warning(this, "Tracking err. in wake elm.", msg[rt-1], QMessageBox::Ok);
       	return 1;
@@ -1340,8 +1341,9 @@ void OptimTrackerNew::cmdTrackingNew( bool poincare) // V7
 	if((k==nturn_-1) && (i== mainw_->nelm_-1)) break;
        
         if (mainw_->interrupted_) {
-	   mainw_->interrupted_ = OptimQuestionMessage(this,  "Tracking", "Do you want to interrupt tracking  ?",
-						       QMessageBox::Yes| QMessageBox::No) == QMessageBox::Yes;
+	  auto button = OptimMessageBox::question(this,  "Tracking", "Do you want to interrupt tracking  ?",
+							   QMessageBox::Yes| QMessageBox::No);
+	  mainw_->interrupted_ = (button ==  QMessageBox::Yes);
 	   break;
         }
   
@@ -1365,13 +1367,14 @@ void OptimTrackerNew::cmdTrackingNew( bool poincare) // V7
              sprintf(buf,
               "On the first turn, the beam was accelerated by %e percent. This can cause instability in further tracking. Do you want to proceed ?",
               (mainw_->Ein -Enr)/mainw_->Ein*0.01);
-	      if(OptimQuestionMessage(this,  "Tracking", buf, QMessageBox::Yes| QMessageBox::No) == QMessageBox::No )return;
-	      
+	     auto button = OptimMessageBox::question(this,  "Tracking", buf, QMessageBox::Yes| QMessageBox::No);
+	     if(button == QMessageBox::No) return;  
          }
      }
 
      if( (twiss.BtX > 1.0e8) || (twiss.BtY >1.0e8)){
-	  OptimQuestionMessage(this, "Tracking", "Beta-functions are above threshold. Calculations stopped",QMessageBox::Yes|QMessageBox::No);
+          auto button = OptimMessageBox::warning(this, "Tracking", "Beta-functions are above threshold. Calculations stopped",
+							    QMessageBox::Ok);
           break;
      }
    	

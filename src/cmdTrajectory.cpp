@@ -36,14 +36,6 @@
 //  =================================================================
 //
 
-//-------------------------------------------------------------------
-// OptiM   (c) FRA/Fermilab 
-// Please refer to OptiM.Copyright.txt for copyright and license 
-// information. All other rights reserved.
-//
-// cmdTrajectory.cpp
-// ------------------------------------------------------------------
-
 #include <platform.h>
 #include <Constants.h>
 #include <GeneralPreferencesDialog.h>

@@ -83,7 +83,7 @@ RMatrix   PCavity::rmatrix( RMatrix_t<3>& frame, double& energy, double ms, int 
   LL.toUnity();
 
 
-  double P2;
+  double P2 = 0.0;
 
   for ( int i=0; i<Ncell; ++i) {
     double P1     = sqrt((En1*En1) + 2.0*En1*ms);

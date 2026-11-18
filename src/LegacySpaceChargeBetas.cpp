@@ -41,6 +41,7 @@
 #include <cstdlib> // for gentenv
 
 #include <Element.h>
+#include <ProgramConstants.h>
 #include <Constants.h>
 #include <OptimCalc.h>
 #include <OptimMainWindow.h>
@@ -59,6 +60,7 @@
 #include <memory>
 #include <iostream>
 
+using ProgramConstants::LSTR;
 using Constants::PI;
 using Constants::C_DERV1;
 
@@ -66,7 +68,6 @@ using Utility::strcmpr;
 using Utility::filterName;
 using Utility::decodeLine;
 
-#define LSTR 1024
 
 
 void OptimMainWindow::Spcharge_betas(Twiss4D& v, BunchParam& bunch, double iscale, bool display_on)   

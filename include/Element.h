@@ -109,8 +109,8 @@ class Element {
    static void swap( Element &e1, Element &e2);
   
    virtual void toString( char* buf) const;
-   virtual void setParameters( int np, double attributes[], ... ); // = 0; //cannot be abstract for now 
-  virtual void setParameters( int np, std::vector<double> const&, ... ); // = 0;
+   virtual void setParameters( int np, double const attributes[], ... ); // = 0; //cannot be abstract for now 
+  virtual void setParameters( int np, std::vector<double> const, ... ); // = 0;
 
    RMatrix   rmatrix( double& energy, double ms, double& tetaY, double dalfa, int st=3) const; // calls the virtual function below. 
 
@@ -188,8 +188,8 @@ class Drift : public Element {
    int  trackOnce( double ms,   double &Enr0,  int n_elem,   int n_turn, TrackParam& prm, RMatrix const& m1, Coordinates& v) const;
 
    void toString( char* buf) const;
-   void setParameters( int np, double attributes[], ... );
-   void setParameters( int np, std::vector<double> const&, ... );
+   void setParameters( int np, double const attributes[], ... );
+   void setParameters( int np, std::vector<double> const, ... );
 
    void setLength( );  
    void length( ) const;  
@@ -211,8 +211,8 @@ class Instrument : public Element {
 
   Instrument*  clone() const { return new Instrument(*this); }
   void toString( char* buf) const;
-  void setParameters( int np, double attributes[], ... );
-  void setParameters( int np, std::vector<double> const&, ... );
+  void setParameters( int np, double const attributes[], ... );
+  void setParameters( int np, std::vector<double> const, ... );
 
 };
 
@@ -225,8 +225,8 @@ class CFBend : public Element {
 
   CFBend*  clone() const { return new CFBend(*this); }
   void toString( char* buf) const;
-  void setParameters( int np, double attributes[], ... );
-  void setParameters( int np, std::vector<double> const&, ... );
+  void setParameters( int np, double const attributes[], ... );
+  void setParameters( int np, std::vector<double> const, ... );
  
   void preTrack( double ms,    double Enr0,  double tetaY, int n_elem,  TrackParam& prm, RMatrix& m1) const;
   int  trackOnce( double ms,   double &Enr0,  int n_elem,   int n_turn, TrackParam& prm, RMatrix const& m1, Coordinates& v) const;
@@ -265,8 +265,8 @@ class Edge : public Element {
    virtual void preTrack( RMatrix_t<3>& frame, double ms,    double Enr0, int n_elem, TrackParam& prm, RMatrix& m1) const;
 
    void toString( char* buf) const;
-   void setParameters( int np, double attributes[], ... );
-   void setParameters( int np, std::vector<double> const&, ... );
+   void setParameters( int np, double const attributes[], ... );
+   void setParameters( int np, std::vector<double> const, ... );
 
    bool   isupstream;
    double bendGradient;
@@ -291,8 +291,8 @@ class Quadrupole : public Element {
     int  trackOnce( double ms,   double &Enr0,  int n_elem,   int n_turn, TrackParam& prm, RMatrix const& m1, Coordinates& v) const;
 
    void toString( char* buf) const;
-   void setParameters( int np, double attributes[], ... );
-   void setParameters( int np, std::vector<double> const&, ... );
+   void setParameters( int np, double const attributes[], ... );
+   void setParameters( int np, std::vector<double> const, ... );
 
 };
 
@@ -316,8 +316,8 @@ class Solenoid : public Element {
   RMatrix rmatrix( RMatrix_t<3>& frame, double& energy, double ms, int st=3) const;
 
   void toString( char* buf) const;
-  void setParameters( int np, double attributes[], ... );
-  void setParameters( int np, std::vector<double> const&, ... );
+  void setParameters( int np, double const attributes[], ... );
+  void setParameters( int np, std::vector<double> const, ... );
 
  private:
   static void SolLinearEdge(RMatrix& mi, double k, double a, int edge);
@@ -344,8 +344,8 @@ class Sextupole : public Element {
 
   Sextupole*  clone() const { return new Sextupole(*this);}
   void toString( char* buf) const;
-  void setParameters( int np, double attributes[], ... );
-  void setParameters( int np, std::vector<double> const&, ... );
+  void setParameters( int np, double const attributes[], ... );
+  void setParameters( int np, std::vector<double> const, ... );
 
 };
 
@@ -368,8 +368,8 @@ class Multipole : public Element {
 
   Multipole*  clone() const { return new Multipole(*this);}
   void toString( char* buf) const;
-  void setParameters( int np, double attributes[], ... );
-  void setParameters( int np, std::vector<double> const&, ... );
+  void setParameters( int np, double const attributes[], ... );
+  void setParameters( int np, std::vector<double> const, ... );
 
  private:
   
@@ -393,8 +393,8 @@ class PCavity : public Element {
    RMatrix   rmatrix( RMatrix_t<3>& frame, double& energy, double ms, int st=3) const;
 
    PCavity*       clone() const { return new PCavity(*this);}
-   void   setParameters( int np, double attributes[], ... );
-   void setParameters( int np, std::vector<double> const&, ... );
+   void   setParameters( int np, double const attributes[], ... );
+   void setParameters( int np, std::vector<double> const, ... );
    void        toString( char* buf) const;
    PCavity*       split( int nslices) const; // return a sliced element
 
@@ -417,8 +417,8 @@ class GCavity : public Element
 
   GCavity*     clone() const { return new GCavity(*this);}
   void      toString(char* buf) const;
-  void setParameters(int np, double attributes[], ... );
-  void setParameters( int np, std::vector<double> const&, ... );
+  void setParameters(int np, double const attributes[], ... );
+  void setParameters( int np, std::vector<double> const, ... );
   GCavity*     split(int nslices) const; // return a sliced element
 
   void preTrack( double ms,    double Enr0,  double tetaY, int n_elem, TrackParam& prm, RMatrix& m1) const;
@@ -429,9 +429,8 @@ class GCavity : public Element
   ExtData const* ext_dat_;
   int*     NStep_;
 
-  SplineInterpolator e_;
+  SplineInterpolator e_; // interpolated electric field 
   
-  //ExtData const* const fieldtbl_;
   double   ampl_;
   double   ms_;
   double   wavelen_;
@@ -473,8 +472,8 @@ class EAcc : public Element {
   
   EAcc*  split(int nslices) const;
   void toString(char* buf) const;
-  void setParameters( int np, double attributes[], ... );
-  void setParameters( int np, std::vector<double> const&, ... );
+  void setParameters( int np, double const attributes[], ... );
+  void setParameters( int np, std::vector<double> const, ... );
 };
 
 class CFEBend : public Element {
@@ -496,8 +495,8 @@ class CFEBend : public Element {
 
   CFEBend*  clone() const { return new CFEBend(*this);}
   void toString( char* buf) const;
-  void setParameters( int np, double attributes[], ... );
-  void setParameters( int np, std::vector<double> const&, ... );
+  void setParameters( int np, double const attributes[], ... );
+  void setParameters( int np, std::vector<double> const, ... );
 
  private:
 
@@ -517,8 +516,8 @@ class EQuadrupole : public Element {
   RMatrix   rmatrix( RMatrix_t<3>& frame, double& energy, double ms, int st=3) const;
 
   EQuadrupole*  clone() const { return new EQuadrupole(*this);}
-  void setParameters( int np, double attributes[], ... );
-  void setParameters( int np, std::vector<double> const&, ... );
+  void setParameters( int np, double const attributes[], ... );
+  void setParameters( int np, std::vector<double> const, ... );
   void toString(char*) const;
 };
 
@@ -539,8 +538,8 @@ class TCorrector : public Element {
 
   TCorrector*  clone() const { return new TCorrector(*this);}
   void toString( char* buf) const;
-  void setParameters( int np, double attributes[], ... );
-  void setParameters( int np, std::vector<double> const&, ... );
+  void setParameters( int np, double const attributes[], ... );
+  void setParameters( int np, std::vector<double> const, ... );
 
 };
 
@@ -558,8 +557,8 @@ class LCorrector : public Element {
   RMatrix rmatrixsc( double& alphap, double& Enr,    double ms, double current, BeamSize& bs,double& tetaY, double dalfa, int st=3 ) const;
   RMatrix   rmatrix( RMatrix_t<3>& frame, double& energy, double ms, int st=3) const;
   void toString( char* buf) const;
-  void setParameters( int np, double attributes[], ... );
-  void setParameters( int np, std::vector<double> const&, ... );
+  void setParameters( int np, double const attributes[], ... );
+  void setParameters( int np, std::vector<double> const, ... );
 
 };
 
@@ -573,8 +572,8 @@ class LiLens : public Element {
   LiLens*  clone() const { return new LiLens(*this);}
 
   void toString( char* buf) const;
-  void setParameters( int np, double attributes[], ... );
-  void setParameters( int np, std::vector<double> const&, ... );
+  void setParameters( int np, double const attributes[], ... );
+  void setParameters( int np, std::vector<double> const, ... );
 
   Beamline*  splitnew(int nslices) const;      // return a sliced element as a beamline 
 
@@ -604,8 +603,8 @@ class XferMatrix : public Element  {
   int  trackOnce( double ms,   double &Enr0,  int n_elem,   int n_turn, TrackParam& prm, RMatrix const& m1, Coordinates& v) const;
 
   XferMatrix*  clone() const { return new XferMatrix(*this);}
-  void     setParameters( int np, double attributes[], ... );
-  void setParameters( int np, std::vector<double> const&, ... );
+  void     setParameters( int np, double const attributes[], ... );
+  void setParameters( int np, std::vector<double> const, ... );
   void         setMatrix( RMatrix const& tm);
   void          toString( char* buf) const;
   XferMatrix*     split(int nslices) const; // return a sliced element
@@ -623,8 +622,8 @@ class Aperture : public Element {
 
   Aperture*  clone() const { return new Aperture(*this);}
   void toString( char* buf) const;
-  void setParameters( int np, double attributes[], ... );
-  void setParameters( int np, std::vector<double> const&, ... );
+  void setParameters( int np, double const attributes[], ... );
+  void setParameters( int np, std::vector<double> const, ... );
 
   Beamline*  splitnew(int nslices) const;      // return a sliced element as a beamline 
 
@@ -645,8 +644,8 @@ class TScatter : public Element {
 
   TScatter*  clone() const { return new TScatter(*this);}
   void toString( char* buf) const;
-  void setParameters( int np, double attributes[], ... );
-  void setParameters( int np, std::vector<double> const&, ... );
+  void setParameters( int np, double const attributes[], ... );
+  void setParameters( int np, std::vector<double> const, ... );
 
   Beamline*  splitnew(int nslices) const;      // return a sliced element as a beamline 
 
@@ -673,8 +672,8 @@ class LScatter : public Element {
 
   //  virtual RMatrix rmatrix( double& alfap, double& energy, double ms, double& tetaY, double dalfa, int st=3) const;
   void toString( char* buf) const;
-  void setParameters( int np, double attributes[], ... );
-  void setParameters( int np, std::vector<double> const&, ... );
+  void setParameters( int np, double const attributes[], ... );
+  void setParameters( int np, std::vector<double> const, ... );
 
   RMatrix   rmatrix( RMatrix_t<3>& frame, double& energy, double ms, int st=3) const;
 
@@ -693,8 +692,8 @@ class BBeam : public Element {
 
   RMatrix rmatrix( double& alfap, double& energy, double ms, double& tetaY, double dalfa, int st=3) const;
   void toString( char* buf) const;
-  void setParameters( int np, double attributes[], ... );
-  void setParameters( int np, std::vector<double> const&, ... );
+  void setParameters( int np, double const attributes[], ... );
+  void setParameters( int np, std::vector<double> const, ... );
 
 };
 
@@ -712,8 +711,8 @@ class WakeField : public Element {
   WakeField*      clone() const { return new WakeField(*this);}
   RMatrix       rmatrix( double& alfap, double& energy, double ms, double& tetaY, double dalfa, int st=3) const;
   void         toString( char* buf) const;
-  void    setParameters( int np, double attributes[], ... );
-  void setParameters( int np, std::vector<double> const&, ... );
+  void    setParameters( int np, double const attributes[], ... );
+  void setParameters( int np, std::vector<double> const, ... );
 
   RMatrix   rmatrix( RMatrix_t<3>& frame, double& energy, double ms, int st=3) const;
 

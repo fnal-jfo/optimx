@@ -341,7 +341,7 @@ std::shared_ptr<Channel> Element::getChannel( std::string const& name)
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void Element::setParameters( int np, double dat[], ... )
+void Element::setParameters( int np, double const dat[], ... )
 {
   std::cout << "**THIS SHOULD NOT BE CALLED*** Element::setParameters "<< std::endl;
 }
@@ -349,7 +349,7 @@ void Element::setParameters( int np, double dat[], ... )
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void Element::setParameters( int np, std::vector<double> const& dat, ... )
+void Element::setParameters( int np, std::vector<double> const dat, ... )
 {
   std::cout << "**THIS SHOULD NOT BE CALLED*** Element::setParameters "<< std::endl;
 }

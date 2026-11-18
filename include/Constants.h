@@ -41,42 +41,41 @@
 
 
 namespace Constants {
-  extern  double const  PI;      //= 3.1415926535897932385;
-  extern  double const  E_NUMB;  //= 2.7182818284590452354;
-  extern  double const  ME_MEV;  // = 0.5110034;
-  extern  double const  ME_kg;
-  extern  double const  MP_MEV;  // = 938.2796;
-  extern  double const  MP_kg;   // = 1.67262192369e−27;
-  extern  double const  Mmu_MEV; // 
-  extern  double const  C_CGS;   //= 2.99792458e10;
-  extern  double const  C_DERV1; //= 0.299792458;
-  extern  double const  C_DERV2; //= 29979.2458;
-  extern  double const  C_DERV3; //= 299.792458;
-  //double const  C10  = 299.7925;
-  //double const  C01  = 0.2997925;
-  extern  double const  KVSR;    //= 2.e-13/3.*4.80298*2.997925*2.997925*2.997925;
-  extern  double const  KE;      //= 1.0128841e-19; //2.997925^5 * 137.03882 * 4.80298^2*55/(24*sqrt(3)*1.e-25
+   inline constexpr double  PI      = 3.1415926535897932385;
+   inline constexpr double  E_NUMB  = 2.7182818284590452354;
+   inline constexpr double  ME_MEV  = 0.510998910;
+   inline constexpr double  ME_kg   = 9.10938356e-31;
+   inline constexpr double  MP_kg   = 1.67262192369e-27;  // Proton mass in kg
+   inline constexpr double  MP_MEV  = 938.272046;
+   inline constexpr double  Mmu_MEV = 105.6583715;
+   inline constexpr double  C_CGS   = 2.99792458e10;
+   inline constexpr double  C_SI    = 2.99792458e8;
+   inline constexpr double  C_DERV1 = 0.299792458;
+   inline constexpr double  C_DERV2 = 29979.2458;
+   inline constexpr double  C_DERV3 = 299.792458;
+  // inline constexpr double  C10  = 299.7925;  // c*10  ?
+  // inline constexpr double  C01  = 0.2997925; // c/100 ? 
+   inline constexpr double  KVSR    = 2.e-13/3.*4.80298*2.997925*2.997925*2.997925;
+   inline constexpr double  KE      = 1.0128841e-19; //2.997925^5 * 137.03882 * 4.80298^2*55/(24*sqrt(3)*1.e-25
+   inline constexpr double  EPS     = 1.0e-5; 
+   inline constexpr double  B_Euler = -0.922784335;
+   inline constexpr double  E_SI    = 1.6021766208e-19; 
+   inline constexpr double  E_CGS   = 4.80320451e-10; //  esu 
 
-  extern  double const E_CGS;
-  extern  double const E_SI; 
-  extern  double const C_SI;
-  extern  double const B_Euler;
-  extern  double const EPS;
 
-  extern  double const pi;              
-  extern  double const a0;           // [m] Bohr radius 
-  extern  double const amu;          // [kg] atomic mass unit;    
-  extern  double const clight;       // [m/s] speed of light   
-  extern  double const N_avogadro;   // Avogadro's number  
-  extern  double const e;            // [C] elementary electric charge [C]   
-  extern  double const r_p;          // [m] classical proton   radius  1/(4pi epsilon_0) e^2/(m c^2)   
-  extern  double const r_e;          // [m] classical electron radius  1/(4pi epsilon_0) e^2/(m c^2)   
-  extern  double const alpha_fs;     // [m] fine structure constexprant
-  extern  double const eps0;         // []  permitivity  of vacuum [MKS] 
-  extern  double const mu0;          // []  permeability of vacuum [MKS] 
-
+  inline constexpr double pi         = 3.1415926535897932385;
+  inline constexpr double a0         = 5.29177210903e-11;         // [m] Bohr radius 
+  inline constexpr double clight     = 2.99792458e8;              // [m/s] speed of light   
+  inline constexpr double amu        = 1.66053906660e-27;         // [kg]  atomic mass unit
+  inline constexpr double N_avogadro = 6.022140857e23;            // Avogadro's number  
+  inline constexpr double e          = 1.602176e-19;              // [C] elementary electric charge [C]   
+  inline constexpr double r_p        = 1.5346978992706655e-18;    // [m] classical proton   radius  1/(4pi epsilon_0) e^2/(m c^2)   
+  inline constexpr double r_e        = 2.8179403227e-15;          // [m] classical electron radius  1/(4pi epsilon_0) e^2/(m c^2)   
+  inline constexpr double alpha_fs   = 0.007297352566354976;      // [m] fine structure inline constexprant
+  inline constexpr double mu0        = 4*pi*1.0e-7;               // []  permeability of vacuum [MKS] 
+  inline constexpr double eps0       = 1.0/(mu0*clight*clight);   // []  permittivity  of vacuum [MKS] 
   
 }
 
-#endif //  CONSTANTS_H
+#endif //  INLINE CONSTANTS_H
 

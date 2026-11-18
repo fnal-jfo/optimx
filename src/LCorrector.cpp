@@ -65,7 +65,7 @@ LCorrector::LCorrector(LCorrector const& o) // 'Z'
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void LCorrector::setParameters( int np, double dat[], ... )
+void LCorrector::setParameters( int np, double const dat[], ... )
 {
   double* rdat[] = { &L_, &G};
   for (int i=0; i<np; ++i) {
@@ -80,7 +80,7 @@ void LCorrector::setParameters( int np, double dat[], ... )
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void LCorrector::setParameters( int np, std::vector<double> const& dat, ... )
+void LCorrector::setParameters( int np, std::vector<double> const dat, ... )
 {
   double* rdat[] = { &L_, &G};
   for (int i=0; i<np; ++i) {

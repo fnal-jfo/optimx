@@ -211,7 +211,7 @@ RMatrix Solenoid::rmatrixsc(double& alfap, double& energy, double ms, double cur
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void Solenoid::setParameters( int np, double dat[], ... )
+void Solenoid::setParameters( int np, double const dat[], ... )
 {
   double* rdat[] = { &L_, &B, &A};
   for (int i=0; i<np; ++i) {
@@ -227,7 +227,7 @@ void Solenoid::setParameters( int np, double dat[], ... )
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void Solenoid::setParameters( int np, std::vector<double> const& dat, ... )
+void Solenoid::setParameters( int np, std::vector<double> const dat, ... )
 {
   double* rdat[] = { &L_, &B, &A};
   for (int i=0; i<np; ++i) {

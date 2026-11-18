@@ -68,7 +68,7 @@ TCorrector::TCorrector(TCorrector const& o)
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void TCorrector::setParameters( int np, double dat[], ... )
+void TCorrector::setParameters( int np, double const dat[], ... )
 {
   double* rdat[] = { &L_, &B, &T_};
   for (int i=0; i<np; ++i) {
@@ -84,7 +84,7 @@ void TCorrector::setParameters( int np, double dat[], ... )
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void TCorrector::setParameters( int np, std::vector<double> const& dat, ... )
+void TCorrector::setParameters( int np, std::vector<double> const dat, ... )
 {
   double* rdat[] = { &L_, &B, &T_};
   for (int i=0; i<np; ++i) {

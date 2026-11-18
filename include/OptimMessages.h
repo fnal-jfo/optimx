@@ -56,20 +56,22 @@ class OptimMessageBox : public QMessageBox {
 		  QWidget *parent = Q_NULLPTR, Qt::WindowFlags f = Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
 
 
-  static StandardButton warning( QWidget* parent, char const* title, char const* text, 
+  static QMessageBox::StandardButton warning( QWidget* parent, QString const& title, QString const& text, 
 				 QMessageBox::StandardButtons buttons = Ok, StandardButton defaultButton = NoButton);
+
+  static  QMessageBox::StandardButton critical( QWidget* parent, QString const& title, QString const& text, 
+                                  QMessageBox::StandardButtons buttons=QMessageBox::Ok, QMessageBox::StandardButton defaultButton = QMessageBox::NoButton); 
+
+  static  QMessageBox::StandardButton information(QWidget* parent, QString const& title, QString const& text, 
+                                    QMessageBox::StandardButtons buttons=QMessageBox::Ok, QMessageBox::StandardButton defaultButton = QMessageBox::NoButton );
+
+  static  QMessageBox::StandardButton  question(QWidget* parent, QString const& title, QString const& text, 
+				 QMessageBox::StandardButtons buttons=QMessageBox::Ok, QMessageBox::StandardButton defaultButton = QMessageBox::NoButton );
+
+
 };
 
 
-extern  QMessageBox::StandardButton OptimCriticalMessage( QWidget* parent, char const* title, char const* text, 
-                                                  QMessageBox::StandardButtons buttons=QMessageBox::Ok, QMessageBox::StandardButton defaultButton = QMessageBox::NoButton); 
-
-extern  QMessageBox::StandardButton OptimInformationMessage(QWidget* parent, char const* title, char const* text, 
-                                                    QMessageBox::StandardButtons buttons=QMessageBox::Ok, QMessageBox::StandardButton defaultButton = QMessageBox::NoButton );
-
-
-extern  int OptimQuestionMessage(QWidget* parent, char const* title, char const* text, 
-						 QMessageBox::StandardButtons buttons=QMessageBox::Ok, QMessageBox::StandardButton defaultButton = QMessageBox::NoButton );
 
 
 #endif // OPTIMMESSAGES_H

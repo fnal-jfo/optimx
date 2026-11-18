@@ -97,7 +97,7 @@ RMatrix Aperture::rmatrix(double& alfap, double& energy, double ms, double& teta
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void Aperture::setParameters( int np, double dat[], ... )
+void Aperture::setParameters( int np, double const dat[], ... )
 {
 
   L_ = 0.0;
@@ -122,7 +122,7 @@ void Aperture::setParameters( int np, double dat[], ... )
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void Aperture::setParameters( int np, std::vector<double> const& dat, ... )
+void Aperture::setParameters( int np, std::vector<double> const dat, ... )
 {
 
   L_ = 0.0;

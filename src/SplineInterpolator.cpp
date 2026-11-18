@@ -41,8 +41,13 @@
 SplineInterpolator::SplineInterpolator()
 {}
 
+//||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+//||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
 SplineInterpolator::SplineInterpolator(double const xv[], double const yv[], int n)
-  : x_( &xv[0], &xv[n]), y_( &yv[0], &yv[n])
+  : x_( &xv[0], &xv[n]),
+    y_( &yv[0], &yv[n])
 {
   double p;
   double sig;

@@ -37,6 +37,7 @@
 //
 
 #include <platform.h>
+#include <ProgramConstants.h>
 #include <Constants.h>
 #include <ControlDialog.h>
 #include <EditReadDialog.h>
@@ -72,7 +73,7 @@
 #include <Utility.h>
 #include <QRegularExpression>
 #include <QAction>
-#include <QKeySequence>
+#include <QKeyCombination>
 #include <QDesktopServices>
 #include <QDir>
 #include <QFile>
@@ -127,10 +128,15 @@ namespace compat = std;
 namespace compat = boost;
 #endif
 
-static const unsigned int LSTR = 1024;
 
 using std::acosh;
 
+using ProgramConstants::NAME_LENGTH; 
+using ProgramConstants::LSTR;
+using ProgramConstants::ARG_LEN;
+using ProgramConstants::DATA_LEN;
+
+using ProgramConstants::MAXFILES; 
 using Constants::C_DERV1; 
 using Constants::C_DERV3;
 using Constants::C_CGS;
@@ -174,7 +180,7 @@ public:
   OptimEditor*      editor         = qobject_cast<OptimEditor*>(watched);
 
   QKeyEvent*   kevent = 0;
-  QKeySequence keyseq;
+  QKeyCombination keyseq;
 
   bool ignore_autorepeat = Globals::preferences().ignore_autorepeat;
     
@@ -184,22 +190,22 @@ public:
 
     case QEvent::KeyPress:
          kevent = dynamic_cast<QKeyEvent*>(event);
-         keyseq = QKeySequence(kevent->modifiers() | kevent->key());
+         keyseq = kevent->keyCombination();
 	 
-         if ( (keyseq == QKeySequence(Qt::ControlModifier | Qt::Key_Right                         )) ||
-	      (keyseq == QKeySequence(Qt::ControlModifier | Qt::Key_Right+Qt::KeypadModifier      )) ||
-	      (keyseq == QKeySequence(Qt::ControlModifier | Qt::Key_Direction_R                   )) || 
-	      (keyseq == QKeySequence(Qt::ControlModifier | Qt::Key_Direction_R+Qt::KeypadModifier)) ) {
+         if ( (keyseq == QKeyCombination(Qt::ControlModifier , Qt::Key_Right                          )) ||
+	      (keyseq == QKeyCombination(Qt::ControlModifier|Qt::KeypadModifier  , Qt::Key_Right      )) ||
+	      (keyseq == QKeyCombination(Qt::ControlModifier,  Qt::Key_Direction_R                    )) || 
+	      (keyseq == QKeyCombination(Qt::ControlModifier| Qt::KeypadModifier, Qt::Key_Direction_R )) ) {
 	   if (ignore_autorepeat) {
 	     if (kevent->isAutoRepeat()) return true;  // accept, but ignore autorepeat events
 	   }
 	   mainw_->DecInc(1);
 	   return true;
 	 }
-         if ( (keyseq == QKeySequence(Qt::ControlModifier | Qt::Key_Left                          )) ||
-	      (keyseq == QKeySequence(Qt::ControlModifier | Qt::Key_Left+Qt::KeypadModifier       )) ||
-	      (keyseq == QKeySequence(Qt::ControlModifier | Qt::Key_Direction_L                   )) || 
-	      (keyseq == QKeySequence(Qt::ControlModifier | Qt::Key_Direction_L+Qt::KeypadModifier)) ) {
+         if ( (keyseq == QKeyCombination(Qt::ControlModifier , Qt::Key_Left                          )) ||
+	      (keyseq == QKeyCombination(Qt::ControlModifier|Qt::KeypadModifier, Qt::Key_Left        )) ||
+	      (keyseq == QKeyCombination(Qt::ControlModifier , Qt::Key_Direction_L                   )) || 
+	      (keyseq == QKeyCombination(Qt::ControlModifier| Qt::KeypadModifier, Qt::Key_Direction_L )) ) {
 	   if (ignore_autorepeat) {
              if (kevent->isAutoRepeat()) return true;        // accept but ignore autorepeat events
 	   }
@@ -242,7 +248,7 @@ public:
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
 OptimMainWindow::OptimMainWindow(QWidget* parent, Qt::WindowFlags flags)
-  : QMainWindow(parent, flags), printer_(QPrinter::HighResolution), ext_dat(MAXFILES)
+  : QMainWindow(parent, flags), printer_(QPrinter::HighResolution)
 {
      mdiArea = new QMdiArea;
      mdiArea->setObjectName("OptimMainWindowMdiArea");
@@ -302,96 +308,95 @@ bool OptimMainWindow::eventFilter(QObject *watched, QEvent *event)
     if (event->type() == QEvent::ShortcutOverride) {
   
        QKeyEvent*            keyEvent  = static_cast<QKeyEvent*>(event);
-       Qt::Key               key       = Qt::Key ( keyEvent->key() ); 
-       Qt::KeyboardModifiers modifiers = keyEvent->modifiers(); 
-
-       if ( QKeySequence(key+modifiers) == QKeySequence(Qt::Key_F1) ) {
+       QKeyCombination       keyseq    = keyEvent->keyCombination();
+       
+       if ( keyseq  == QKeyCombination(Qt::Key_F1) ) {
 	 keyEvent->setAccepted(true);
          optimHelpAct_->trigger();
 	 return true;
        }
-       if ( QKeySequence(key+modifiers) ==  QKeySequence(Qt::Key_F2) )  {
+       if ( keyseq ==  QKeyCombination(Qt::Key_F2) )  {
 	 keyEvent->setAccepted(true);
          analyzeLatticeAct_->trigger();
 	 return true;
        }
 
-       if ( QKeySequence(key+modifiers) ==  QKeySequence(Qt::Key_F3) ) {
+       if ( keyseq ==  QKeyCombination(Qt::Key_F3) ) {
 	 keyEvent->setAccepted(true);
          nextAct_->trigger();
 	 return true;
        }
-       if ( QKeySequence(key+modifiers) ==  QKeySequence(Qt::Key_F4) ) {
+       if ( keyseq ==  QKeyCombination(Qt::Key_F4) ) {
 	 keyEvent->setAccepted(true);
          findAct_->trigger();
 	 return true;
        }
 
-       if ( QKeySequence(key+modifiers) ==  QKeySequence(Qt::Key_F5) )  {
+       if ( keyseq ==  QKeyCombination(Qt::Key_F5) )  {
 	 keyEvent->setAccepted(true);
          analyzeLineAct_->trigger();
 	 return true;
        }
 
-       if ( QKeySequence(key+modifiers) ==  QKeySequence(Qt::Key_F6) ) {
+       if ( keyseq ==  QKeyCombination(Qt::Key_F6) ) {
 	 keyEvent->setAccepted(true);
          controlAct_->trigger();
 	 return true;
        }
 
-       if (  QKeySequence(key+modifiers) == QKeySequence(Qt::Key_F7) ) {
+       if (  keyseq == QKeyCombination(Qt::Key_F7) ) {
 	 keyEvent->setAccepted(true);
          detachAct_->trigger();
 	 return true;
        }
 
-       if (  QKeySequence(key+modifiers) == QKeySequence(Qt::Key_F8) )  {
+       if (  keyseq == QKeyCombination(Qt::Key_F8) )  {
 	 keyEvent->setAccepted(true);
          functionsAtElementsAct_->trigger();
 	 return true;
        }
 
-       if (  QKeySequence(key+modifiers) == QKeySequence(Qt::Key_F10) ) {
+       if ( keyseq  == QKeyCombination(Qt::Key_F10) ) {
 	 keyEvent->setAccepted(true);
          stepsAct_->trigger();
 	 return true;
        }
 
 
-       if (  QKeySequence(key+modifiers) == QKeySequence(Qt::Key_F4) ) {
+       if (  keyseq == QKeyCombination(Qt::Key_F4) ) {
 	 keyEvent->setAccepted(true);
          exitAct_->trigger();
 	 return true;
        }
 
-       if (  QKeySequence(key+modifiers) == QKeySequence(Qt::Key_F2 | Qt::ControlModifier) )  { // will not work with standard KDE/kwin bindings.
-	                                                                                        // unless Ctrl-F2 is disabled in KDE
+       if (  keyseq == QKeyCombination( Qt::ControlModifier, Qt::Key_F2))  { // will not work with standard KDE/kwin bindings.
+	                                                                     // unless Ctrl-F2 is disabled in KDE
        	 keyEvent->setAccepted(true);
          analyzeHeaderAct_->trigger();
        	 return true;
        }
 
-       if (  QKeySequence(key+modifiers) == QKeySequence(Qt::Key_F2 | Qt::ControlModifier | Qt::ShiftModifier ))  {  // alternative with standard KDE/kwin bindings
+       if ( keyseq  == QKeyCombination(Qt::ControlModifier | Qt::ShiftModifier, Qt::Key_F2))  {  // alternative with standard KDE/kwin bindings
        	 keyEvent->setAccepted(true);
          analyzeHeaderAct_->trigger();
        	 return true;
        }
 
-       if (  QKeySequence(key+modifiers) == QKeySequence(Qt::Key_F5 | Qt::ControlModifier) )   {
+       if ( keyseq == QKeyCombination( Qt::ControlModifier, Qt::Key_F5) )   {
 	 keyEvent->setAccepted(true);
          calculatorAct_->trigger();
 	 return true;
        }
        
        
-       if (  QKeySequence(key+modifiers) == QKeySequence( Qt::Key_B | Qt::AltModifier) ) {
+      if ( keyseq  == QKeyCombination(  Qt::AltModifier, Qt::Key_B) ) {
 	 keyEvent->setAccepted(true);
          betasAct_->trigger();
          event->setAccepted(true);
 	 return true;
        }
 
-       if ( QKeySequence(key+modifiers) ==  QKeySequence(Qt::Key_I | Qt::AltModifier) ) {
+       if ( keyseq  ==  QKeyCombination(Qt::AltModifier, Qt::Key_I) ) {
 	 if (LatticeCh_) {
 	   keyEvent->setAccepted(true);
            integralsAct_->trigger();
@@ -403,7 +408,7 @@ bool OptimMainWindow::eventFilter(QObject *watched, QEvent *event)
 	 }  
        }
 
-       if (  QKeySequence(key+modifiers) ==  QKeySequence(Qt::Key_F | Qt::AltModifier) ) {
+       if ( keyseq ==  QKeyCombination(Qt::AltModifier, Qt::Key_F) ) {
 	 if (LatticeCh_) {
 	   keyEvent->setAccepted(true);
            functionsAct_->trigger();
@@ -415,24 +420,24 @@ bool OptimMainWindow::eventFilter(QObject *watched, QEvent *event)
 	 }
        }
 
-       if (  QKeySequence(key+modifiers) ==  QKeySequence(Qt::Key_L | Qt::AltModifier) ) {
+      if ( keyseq  ==  QKeyCombination( Qt::AltModifier, Qt::Key_L) ) {
 	 keyEvent->setAccepted(true);
          latticeAct_->trigger();
 	 return true;
        }
 
-       if (  QKeySequence(key+modifiers) ==  QKeySequence(Qt::Key_M | Qt::AltModifier) ) {
+      if (  keyseq  ==  QKeyCombination( Qt::AltModifier, Qt::Key_M) ) {
 	 keyEvent->setAccepted(true);
          matrixAct_->trigger();
 	 return true;
        }
 
-       if (  QKeySequence(key+modifiers) ==  QKeySequence(Qt::Key_O | Qt::AltModifier) ) {
+       if ( keyseq ==  QKeyCombination( Qt::AltModifier, Qt::Key_O ) ) {
 	 keyEvent->setAccepted(true);
          orbitAct_->trigger();
 	 return true;
        }
-       if (  QKeySequence(key+modifiers) ==  QKeySequence(Qt::Key_P+Qt::AltModifier) ) {
+       if (  keyseq ==  QKeyCombination(Qt::AltModifier,Qt::Key_P) ) {
          if (LatticeCh_) {
 	   keyEvent->setAccepted(true);
            phasesAct_->trigger();
@@ -444,7 +449,7 @@ bool OptimMainWindow::eventFilter(QObject *watched, QEvent *event)
 	 }
        }
 
-       if (  QKeySequence(key+modifiers) == QKeySequence(Qt::Key_S | Qt::AltModifier) ) {
+	 if (  keyseq == QKeyCombination( Qt::AltModifier, Qt::Key_S) ) {
 	 if (LatticeCh_) {
 	   keyEvent->setAccepted(true);
            sizesAct_->trigger();
@@ -457,10 +462,10 @@ bool OptimMainWindow::eventFilter(QObject *watched, QEvent *event)
        }
 
 #if 0
-       if (  QKeySequence(key+modifiers) == QKeySequence( Qt::Key_T+Qt::AltModifier+Qt::ShiftModifier) ) {
+       if (  QKeyCombination(key+modifiers) == QKeyCombination( Qt::Key_T+Qt::AltModifier+Qt::ShiftModifier) ) {
 
-	 std::cout << "key "       << std::bitset<32>(key)       << std::endl;
-	 std::cout << "modifiers " << std::bitset<32>(modifiers) << std::endl;
+	 ///std::cout << "key "       << std::bitset<32>(key)       << std::endl;
+	 //std::cout << "modifiers " << std::bitset<32>(modifiers) << std::endl;
 
 	 if (LatticeCh_) {
 	    keyEvent->accept();
@@ -473,7 +478,7 @@ bool OptimMainWindow::eventFilter(QObject *watched, QEvent *event)
 	  }
        } 
 
-      if (  QKeySequence(key+modifiers) == QKeySequence(Qt::Key_T+Qt::AltModifier) ) {
+       if (  QKeyCombination(keyseq) == QKeyCombination(Qt::AltModifier, Qt::Key_T) ) {
        	 if (LatticeCh_) {
 	    keyEvent->setAccepted(true);
             integrationStepAct_->trigger();
@@ -485,13 +490,13 @@ bool OptimMainWindow::eventFilter(QObject *watched, QEvent *event)
 	 }  
        }
 #endif       
-      if (  QKeySequence(key+modifiers) == QKeySequence(Qt::Key_Backspace | Qt::AltModifier) ) {
+       if (  QKeyCombination(keyseq) == QKeyCombination(Qt::AltModifier, Qt::Key_Backspace) ) {
 	 keyEvent->setAccepted(true);
          undoAct_->trigger();
 	 return true;
        }
 
-       if (  QKeySequence(key+modifiers) == QKeySequence(Qt::Key_E |  Qt::ControlModifier) )   {
+       if (  QKeyCombination(keyseq) == QKeyCombination( Qt::ControlModifier, Qt::Key_E) )   {
 	 keyEvent->setAccepted(true);
          executeAct_->trigger();
 	 return true;
@@ -505,7 +510,7 @@ bool OptimMainWindow::eventFilter(QObject *watched, QEvent *event)
 
 #if 0
 #ifndef USE_WINDOWS
-       if ( QKeySequence(key+modifiers) == QKeySequence(Qt::Key_O | Qt::ControlModifier) )   {
+       if ( QKeyCombination(keyseq) == QKeyCombination( Qt::ControlModifier, Qt::Key_O) )   {
 	 std::cout << "Ctrl-O" << std::endl;
 	 keyEvent->setAccepted(true);
          openAct_->trigger();
@@ -513,8 +518,8 @@ bool OptimMainWindow::eventFilter(QObject *watched, QEvent *event)
        }
 #endif
 #endif        
-       if (  QKeySequence(key+modifiers)  ==  QKeySequence(Qt::Key_W | Qt::ControlModifier) ||
-	     QKeySequence(key+modifiers)  ==  QKeySequence(Qt::Key_S | Qt::ControlModifier) )   {
+       if (  QKeyCombination(keyseq)  ==  QKeyCombination(Qt::ControlModifier,Qt::Key_W) ||
+	     QKeyCombination(keyseq)  ==  QKeyCombination(Qt::ControlModifier,Qt::Key_S) )   {
 	 keyEvent->setAccepted(true);
          saveAct_->trigger();
 	 return true;
@@ -968,12 +973,14 @@ void OptimMainWindow::cmdNewTxt()
   	   resizeLatticeWindow();
          }  
          else {
-           if( OptimInformationMessage( this, "Open File", "Only one lattice file can be active. Open as a regular text file ? ",
-					QMessageBox::Yes | QMessageBox::No) ==  QMessageBox::Yes )  {
-	     openTxt(fileName);
-	     return;
-	   } 
-           return; 
+             auto button = OptimMessageBox::information( this, "Open File",
+			   "Only one lattice file can be active. Open as a regular text file ? ",
+			   (QMessageBox::Yes | QMessageBox::No));  
+	 	  if (button == QMessageBox::Yes) {
+	          openTxt(fileName);
+	          return;
+	     }
+             return;
 	 } 
 
          if (editor->loadFile(fileName)) {
@@ -1220,7 +1227,7 @@ void OptimMainWindow::cmdEditRedo()
 	        tr("OptimX <br>"
 	           "Build date: " __DATE__ "<br>")+
                    architecture +    
-                tr ("(c) 2014-2025 FermiForward Discovery Group/Fermilab <br>"
+                tr ("(c) 2014-2026 FermiForward Discovery Group/Fermilab <br>"
                    "Original author: val@fnal.gov <br>"
                    "Qt port and further enhancements: ostiguy@fnal.gov <br>" ));
  }
@@ -2157,11 +2164,10 @@ int OptimMainWindow::getTrajParamFromFile(bool Reprint, bool Update, Coordinates
    
  if(nline == nmblines) {
    
-   if( OptimInformationMessage( this, "Trajectory", "There is no TrajParamBlock. Do you want to create it?",
-			    QMessageBox::Yes | QMessageBox::No) ==  QMessageBox::No ) {
-       return 1;
-   }
- 
+     auto button = OptimMessageBox::information( this, "Trajectory", "There is no TrajParamBlock. Do you want to create it?",
+							  QMessageBox::Yes | QMessageBox::No); 
+     if (button ==  QMessageBox::No) return 1;
+    
      replaceLine(editor, nline-1, buf);
      QTextCursor cursor = editor->textCursor();
      cursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor); 
@@ -2364,13 +2370,13 @@ gdferr:
    // Memory allocation
    
    if((n>=MAXFILES)||(n<0)){
-     sprintf(buf,"File reference number of %d is outside allowed range of [0,%d]",
+     sprintf(buf,"File reference number %d is outside of the allowed range [0,%d]",
 		  n,MAXFILES-1);
      OptimMessageBox::warning(this,"Parsing error", buf, QMessageBox::Ok);
      return 1;
    }
    
-   if(ext_dat[n].n != 0){
+   if(Globals::ext_dat_db[n].n != 0){
      OptimMessageBox::warning(this, "Parsing error", "Duplicate reference to an external file", QMessageBox::Ok);
      return 1;
    }
@@ -2396,16 +2402,16 @@ gdffer:
    
 
    try {
-    ext_dat[n].x.resize(i);
-    ext_dat[n].y.resize(i);
-    ext_dat[n].v.resize(i);
+     Globals::ext_dat_db[n].x.resize(i);
+     Globals::ext_dat_db[n].y.resize(i);
+     Globals::ext_dat_db[n].v.resize(i);
    }
    catch (...) {
       OptimMessageBox::warning(this, "Error", "Cannot allocate memory", QMessageBox::Ok );
       return 1;
    }
    
-   ext_dat[n].n = 1;
+   Globals::ext_dat_db[n].n = 1;
 
    // Read external file ...
     auto fhdel2 = [](FILE* p) { (p ? std::fclose(p) : 0);};  
@@ -2417,9 +2423,9 @@ gdffer:
 
      if(buf[0]=='#') continue;
 
-     if(sscanf(buf,"%le %le ", &(ext_dat[n].x[i]), &(ext_dat[n].y[i]))==2) ++i;
+     if(sscanf(buf,"%le %le ", &(Globals::ext_dat_db[n].x[i]), &(Globals::ext_dat_db[n].y[i]))==2) ++i;
 
-     if(i>2) if(ext_dat[n].x[i-1] <= ext_dat[n].x[i-2]) {
+     if(i>2) if(Globals::ext_dat_db[n].x[i-1] <= Globals::ext_dat_db[n].x[i-2]) {
        OptimMessageBox::warning(this, "Error: X coordinate must be monotone increasing.", filenm, QMessageBox::Ok );
        return 1;
      }
@@ -2427,11 +2433,12 @@ gdffer:
    //fclose(fp);
    if(i<5) goto gdffer;
    
-   ext_dat[n].n=i;
+   Globals::ext_dat_db[n].n=i;
+   Globals::ext_dat_db[n].name = std::string(filenm);
 
    // Vector for spline interpolation
 
-   spline(&ext_dat[n].x[0], &ext_dat[n].y[0], ext_dat[n].n, &ext_dat[n].v[0]);
+   spline(&Globals::ext_dat_db[n].x[0], &Globals::ext_dat_db[n].y[0], Globals::ext_dat_db[n].n, &Globals::ext_dat_db[n].v[0]);
    
    return 0;
 }
@@ -3186,7 +3193,7 @@ void OptimMainWindow::help()
 
   QFileInfo check_file(path+ "/help/htmldoc/optimx.html");
   if ( !(check_file.exists() && check_file.isFile()) ) {
-    OptimInformationMessage( this, "info", ("Can not open local help file:\n" + helpurl.toLocalFile()).toUtf8().data(),
+    OptimMessageBox::information( this, "info", ("Can not open local help file:\n" + helpurl.toLocalFile()).toUtf8().data(),
 			     QMessageBox::Ok);
     return;
   }
@@ -3201,7 +3208,7 @@ void OptimMainWindow::help()
   
   bool success = QDesktopServices::openUrl(helpurl);
   if (!success) { 
-    OptimInformationMessage( this, "info", "Request to launch default browser failed.", QMessageBox::Ok);
+    OptimMessageBox::information( this, "info", "Request to launch default browser failed.", QMessageBox::Ok);
     return;
   }
 
@@ -3637,9 +3644,6 @@ void OptimMainWindow::cmdScaleEnergy()
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
 #if  0
-
-#define ARG_LEN 10
-#define DATA_LEN 9
 
 void OptimMainWindow::cmdFileExecute ()
 {

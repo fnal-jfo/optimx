@@ -76,7 +76,6 @@
 #include <QImage>
 #include <QPainter>
 #include <QImageWriter>
-#include <QRegExp>
 #include <QMdiSubWindow>
 #include <QMenu>
 #include <QDateTime>
@@ -93,9 +92,7 @@
 #include <QPixmap>
 #include <QPointer>
 #include <QRect>
-#if QT_VERSION >= 0x050000
 #include <QRegularExpression>
-#endif
 
 #include <QwtPlotCanvas>
 #include <QwtLegend>
@@ -802,7 +799,6 @@ void OptimPlot::editMeasuredData()
   QStringList list;
   QwtPlotItemList curves = itemList( QwtPlotItem::RttiValues::Rtti_PlotIntervalCurve ); //  QwtPlotItem::RttiValues::Rtti_PlotCurve);
   for (auto it = curves.begin(); it != curves.end(); ++it) {
-    //if  ( (*it)->title().text().contains(QRegExp("^Data_")) ) {
     if  ( (*it)->title().text().indexOf(QRegularExpression("^Data_")) != -1 ) {
        list.append((*it)->title().text());
     }
@@ -845,9 +841,7 @@ void OptimPlot::editMeasuredData()
      
      // refresh the legend ( note: the legend is a single string with newline terminators )
    if ( editdata.remove_set ) {
-     //QRegExp rx(editdata.current_txt +".*\\n");
      QRegularExpression rx(editdata.current_txt +".*\\n");
-     //rx.setMinimal(true);  
      datatxt_.replace(rx,"");
      
      if (curve) { 
@@ -875,11 +869,7 @@ void OptimPlot::editMeasuredData()
   if (editdata.show_legend ) {
      QString tmpstr( datatxt_);
      if (!editdata.show_full_path) {
-#if QT_VERSION >= 0x050000
        QRegularExpression re(R"(((/.*/)|(\\.*\\)))");
-#else
-       QRegExp re(R"(((/.*/)|(\\.*\\)))");
-#endif
        tmpstr.remove(re);
      };
      QwtText dataqwt( tmpstr );
@@ -1147,11 +1137,7 @@ void OptimPlot::addMeasuredData()
   if ( mdata_show_legend_ ) {
      QString tmpstr( datatxt_);
      if (!mdata_show_full_path_) {
-#if QT_VERSION >= 0x050000
        QRegularExpression re(R"(((/.*/)|(\\.*\\)))");
-#else
-       QRegExp re(R"(((/.*/)|(\\.*\\)))");
-#endif
        tmpstr.remove(re);
      };
      QwtText dataqwt( tmpstr );
@@ -1320,9 +1306,10 @@ void   OptimPlot::saveAs()
 
 #ifdef __linux__  
   QString extension = dialog->selectedNameFilter(); 
-  QRegExp rx("^[^\\s]+");
-  auto idx = rx.indexIn(extension);  
-  auto len = rx.matchedLength();  
+  QRegularExpression rx("^[^\\s]+");
+  auto match = rx.match(extension);
+  auto idx = match.hasMatch() ? match.capturedStart(): -1;  
+  auto len = match.capturedLength();  
   dialog->selectFile(filename + "." + extension.left(len));
 #else   
   dialog->selectFile(filename);

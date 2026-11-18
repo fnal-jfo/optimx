@@ -34,6 +34,11 @@
 #  =================================================================
 #
 #
+#---------------------------------------------
+# CMakeLists.txt for OptimX
+#
+# Author: ostiguy@fnal.gov
+#
 # cmake -DCMAKE_BUILD_TYPE=Release ..
 # cmake -DCMAKE_BUILD_TYPE=Debug ..
 #--------------------------------------------

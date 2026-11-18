@@ -67,7 +67,7 @@ LScatter::LScatter(LScatter const& o)
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void LScatter::setParameters( int np, double dat[], ... )
+void LScatter::setParameters( int np, double const dat[], ... )
 {
   L_ = 0.0;
   double* rdat[] = { &B, &G, &T_};
@@ -83,7 +83,7 @@ void LScatter::setParameters( int np, double dat[], ... )
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void LScatter::setParameters( int np, std::vector<double> const& dat, ... )
+void LScatter::setParameters( int np, std::vector<double> const dat, ... )
 {
   L_ = 0.0;
   double* rdat[] = { &B, &G, &T_};

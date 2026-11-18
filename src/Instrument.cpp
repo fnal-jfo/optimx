@@ -64,7 +64,7 @@ Instrument::Instrument(Instrument const& o) // 'I'
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void Instrument::setParameters( int np, double dat[], ... )
+void Instrument::setParameters( int np, double const dat[], ... )
 {
   double* rdat[] = { &L_, &T_};
   for(int i=0; i<np; ++i) {
@@ -79,7 +79,7 @@ void Instrument::setParameters( int np, double dat[], ... )
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void Instrument::setParameters( int np, std::vector<double> const& dat, ... )
+void Instrument::setParameters( int np, std::vector<double> const dat, ... )
 {
   double* rdat[] = { &L_, &T_};
   for(int i=0; i<np; ++i) {

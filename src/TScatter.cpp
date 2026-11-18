@@ -64,7 +64,7 @@ TScatter::TScatter(TScatter const& o) // 'T'
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void TScatter::setParameters( int np, double dat[], ... )
+void TScatter::setParameters( int np, double const dat[], ... )
 {
   L_ = 0.0;
   
@@ -80,7 +80,7 @@ void TScatter::setParameters( int np, double dat[], ... )
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void TScatter::setParameters( int np, std::vector<double> const& dat, ... )
+void TScatter::setParameters( int np, std::vector<double> const dat, ... )
 {
   L_ = 0.0;
   

@@ -78,7 +78,7 @@ RMatrix BBeam::rmatrix(double& alfap, double& energy, double ms, double& tetaY, 
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void BBeam::setParameters( int np, double dat[], ... )
+void BBeam::setParameters( int np, double const dat[], ... )
 {
   L_ = 0.0;
 }
@@ -86,7 +86,7 @@ void BBeam::setParameters( int np, double dat[], ... )
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void BBeam::setParameters( int np, std::vector<double> const& dat, ... )
+void BBeam::setParameters( int np, std::vector<double> const dat, ... )
 {
   L_ = 0.0;
 }

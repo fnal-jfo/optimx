@@ -118,7 +118,7 @@ RMatrix Multipole::rmatrix(double& alfap, double& energy, double ms, double& tet
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void Multipole::setParameters( int np, double dat[], ... )
+void Multipole::setParameters( int np, double const dat[], ... )
 {
   L_ = 0.0;
   B  = 0.0;
@@ -139,7 +139,7 @@ void Multipole::setParameters( int np, double dat[], ... )
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void Multipole::setParameters( int np, std::vector<double> const& dat, ... )
+void Multipole::setParameters( int np, std::vector<double> const dat, ... )
 {
   L_ = 0.0;
   B  = 0.0;

@@ -44,6 +44,7 @@
 
 #include <Element.h>
 #include <Constants.h>
+#include <ProgramConstants.h>
 #include <OptimCalc.h>
 #include <OptimMainWindow.h>
 #include <OptimPlot.h>
@@ -54,11 +55,9 @@
 #include <RMatrix.h>
 #include <QMdiSubWindow>
 
+using ProgramConstants::LSTR;
 using Constants::PI;
 using Constants::C_DERV1;
-
-#define LSTR 1024
-
 
 
 void OptimMainWindow::SpaceChargeSizes(Twiss4D& v, BunchParam& bunch)

@@ -36,7 +36,6 @@
 //  =================================================================
 //
 #include <ScientificDoubleSpinBox.h>
-#include <QRegExp>
 #include <QLineEdit>
 #include <set>
 #include <algorithm>

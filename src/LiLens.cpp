@@ -149,7 +149,7 @@ RMatrix LiLens::rmatrixsc( double& alphap, double& Enr,    double ms, double cur
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void LiLens::setParameters( int np, double dat[], ... )
+void LiLens::setParameters( int np, double const dat[], ... )
 {
   double* rdat[] = { &L_, &G};
   for (int i=0; i<np; ++i) {
@@ -163,7 +163,7 @@ void LiLens::setParameters( int np, double dat[], ... )
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void LiLens::setParameters( int np, std::vector<double> const& dat, ... )
+void LiLens::setParameters( int np, std::vector<double> const dat, ... )
 {
   double* rdat[] = { &L_, &G};
   for (int i=0; i<np; ++i) {

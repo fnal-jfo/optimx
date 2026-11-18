@@ -39,7 +39,7 @@
 #include <iostream>
 #include <iomanip>
 
-//#include <Constants.h>
+#include <ProgramConstants.h>
 #include <QtGui>
 #include <QPixmap>
 #include <QFontDialog>
@@ -64,7 +64,9 @@
 #include <QwtLegend>
 
 
-static unsigned int LSTR = 1024;
+using ProgramConstants::LSTR;
+using ProgramConstants::ARG_LEN;
+using ProgramConstants::DATA_LEN;
 using Constants::PI; 
 using Constants::C_CGS;
 using Constants::C_DERV1; 
@@ -74,8 +76,6 @@ using Constants::KE;
 
 using Utility::gauss; 
 
-#define ARG_LEN 10
-#define DATA_LEN 9
 
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

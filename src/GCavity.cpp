@@ -51,13 +51,14 @@
 
 using std::acosh;
 
+using ProgramConstants::FUDGE;
 using Constants::PI;
 using Constants::C_DERV1;
 using Constants::C_DERV3;
 using Constants::C_CGS;
 
 GCavity::GCavity(const char* nm, char const* fnm)
-  : Element(nm,fnm), ext_dat_(0) {} //  fieldtbl_(0) {}
+  : Element(nm,fnm), ext_dat_(0) {}
 
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -66,9 +67,7 @@ GCavity::GCavity(GCavity const& o)
   : Element(o),
     ext_dat_(o.ext_dat_),
     NStep_(o.NStep_),
-    e_(&o.ext_dat_->x[0],
-       &o.ext_dat_->y[0],
-       ext_dat_->n ) 
+    e_(o.e_) 
 {}
 
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -170,7 +169,7 @@ RMatrix GCavity::rmatrix(double& alfap, double& energy, double ms, double& tetaY
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void GCavity::setParameters( int np, double dat[], ... ) 
+void GCavity::setParameters( int np, double const dat[], ... ) 
 {
   double Ndum = 0.0;
   double* rdat[] = { &L_, &G, &S, &T_, &Ndum };
@@ -190,19 +189,19 @@ void GCavity::setParameters( int np, double dat[], ... )
   va_list args;
   va_start(args, dat);
    
-  ext_dat_ = (va_arg(args, ExtData const*));  //  &ext_dat_[N];
-  NStep_   = (va_arg(args, int*          ));  //  CtSt_.NStep    
-
+  ext_dat_ =  (va_arg(args, ExtData const*));  //  &ext_dat_db[N];
+  NStep_   =  (va_arg(args, int*          ));  //  &CtSt_.NStep    
   
   // *** FIXME *** ext_dat_ and NStep_ are connected to external stuff in
   // a rather kludgy manner. This needs to be cleaned up.
 
+  va_end(args);
 }
 
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-void GCavity::setParameters( int np, std::vector<double> const& dat, ... ) 
+void GCavity::setParameters( int np, std::vector<double> const dat, ... ) 
 {
   double Ndum = 0.0;
   double* rdat[] = { &L_, &G, &S, &T_, &Ndum };
@@ -222,13 +221,14 @@ void GCavity::setParameters( int np, std::vector<double> const& dat, ... )
   va_list args;
   va_start(args, dat);
    
-  ext_dat_ = (va_arg(args, ExtData const*));  //  &ext_dat_[N];
-  NStep_   = (va_arg(args, int*          ));  //  CtSt_.NStep    
+  ext_dat_ = (va_arg(args, ExtData const*));  //  &ext_dat_db[N];
+  NStep_   = (va_arg(args, int*          ));  //  &CtSt_.NStep    
 
   
   // *** FIXME *** ext_dat_ and NStep_ are connected to external stuff in
   // a rather kludgy manner. This needs to be cleaned up.
 
+  va_end(args);
 }
 
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -259,7 +259,6 @@ INTEGRERR GCavity::get_energy(ODEparam *p, double Enr1, double *Enr2, int n)
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-#define FUDGE 6.
 
 INTEGRERR GCavity::get_cav_phase(double En1, double dEn, ODEparam *p, int m)
 {

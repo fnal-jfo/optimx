@@ -35,6 +35,11 @@
 #
 #  =================================================================
 #
+#---------------------------------------------
+# CMakeLists.txt for OptimX
+#
+# Author: ostiguy@fnal.gov
+#
 # cmake -DCMAKE_BUILD_TYPE=Release <project_top_dir>
 # cmake -DCMAKE_BUILD_TYPE=Debug   <project_top_dir>
 #
@@ -44,14 +49,14 @@
 # before invoking the cmake command
 #  or alternatively
 # CC=clang  CXX=clang++ cmake -DCMAKE_BUILD_TYPE=Release <project_top_dir>
-#
+
 #--------------------------------------------
 
 IF(NOT QTVER)
   SET(QTVER "6" CACHE STRING "Specify qt library version. Options are 5, 6" FORCE)
 ENDIF()
 
-#use this to spot issues under Qt 5.15, in prep for migation to 6.X 
+#use this to spot issues under 5.15 <= QTVER < 6 , in prep for migation to 6.X 
 add_compile_definitions(QT_DISABLE_DEPRECATED_BEFORE=0x050F00) 
 
 # cmake_minimum_required(VERSION 3.7.1) # setting this is required
@@ -74,7 +79,8 @@ set(CMAKE_LINK_FLAGS                 "-stdlib=libc++")
 # FMT_HEADER_ONLY     : use header only version of the fmt library
 #
 set(CMAKE_CXX_FLAGS                  "-fopenmp")
-set(CMAKE_CXX_FLAGS_DEBUG            "-O0 -g")
+set(CMAKE_CXX_FLAGS_DEBUG            "-O0 -g -fsanitize=address,undefined -fno-sanitize=vptr")
+#set(CMAKE_CXX_FLAGS_DEBUG            "-O0 -g")
 set(CMAKE_CXX_FLAGS_RELEASE          "-O3  -DQT_NO_DEBUG")
 set(CMAKE_CXX_FLAGS_RELWITHDEBUGINFO "-O3 -g")
 set(CMAKE_CXX_FLAGS_MINSIZEREL       "")  # flags to minimize size and maximize speed 
@@ -427,7 +433,6 @@ src/CFEBend.cpp
 src/Cavity.cpp
 src/Channel.cpp
 src/CompactLegend.cpp
-src/Constants.cpp
 src/CustomEvents.cpp
 src/cmdBetas.cpp
 src/cmdBetasNew.cpp

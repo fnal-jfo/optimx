@@ -36,14 +36,6 @@
 //  =================================================================
 //
 
-//-------------------------------------------------------------------
-// OptimX   (c) FRA/Fermilab 
-// Please refer to OptiM.Copyright.txt for copyright and license 
-// information. All other rights reserved.
-//
-// File: cmdFunctions4D.cpp
-// ------------------------------------------------------------------
-
 #include <iostream>
 #include <complex>
 #include <cmath>
@@ -54,6 +46,7 @@
 #include <fmt/format.h>
 #include <QObject>
 
+#include <ProgramConstants.h>
 #include <Constants.h>
 #include <Element.h>
 #include <ElementSelectionDialog.h>
@@ -74,16 +67,10 @@
 //#include <QwtLegend>
 #include <qwt_legend.h>
 
+using ProgramConstants::LSTR;
 using Constants::PI;
 using Utility::filterName;
 using fmt::format_to;
-
-
-//||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-
-#define LSTR 1024
-
 
 //|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 //|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -511,7 +498,7 @@ int OptimMainWindow::ViewFunctions4D (char* filenm, FunctionDlgStruct* NStf)
     if(filenm) {
       fprintf(fp, "%s", outbufRaw.data());
       fclose(fp);
-      OptimInformationMessage( this, "File has been saved.", filenm, QMessageBox::Ok);
+      OptimMessageBox::information( this, "File has been saved.", filenm, QMessageBox::Ok);
     }
     else {
       editor->appendPlainText(outbufRaw.data());

@@ -42,6 +42,7 @@
 #include <memory>
 
 #include <Element.h>
+#include <ProgramConstants.h>
 #include <Constants.h>
 #include <OptimCalc.h>
 #include <OptimMainWindow.h>
@@ -53,6 +54,7 @@
 #include <RMatrix.h>
 
 
+using ProgramConstants::LSTR;
 using Constants::PI;
 using Constants::C_DERV1;
 
@@ -60,7 +62,6 @@ using Utility::strcmpr;
 using Utility::filterName;
 using Utility::decodeLine;
 
-#define LSTR 1024
 
 void OptimMainWindow::Spcharge_phases(Twiss4D& v, BunchParam& bunch)
 {
